@@ -3,353 +3,559 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mount Elaria – Elaria Official</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<title>Mount Elaria – Journey of the Silent Peaks</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --gold: #D4A017;
-    --gold-light: #F5D060;
-    --gold-dark: #8B6914;
-    --teal-crystal: #00CED1;
-    --teal-glow: #40E0D0;
-    --forest-dark: #0A1A0A;
-    --forest-mid: #0F2A10;
-    --forest-deep: #071207;
-    --mushroom-red: #CC3322;
-    --parchment: #F5E8C0;
-    --pink-crystal: #DD44AA;
-  }
+:root {
+  --gold:        #D4A017;
+  --gold-light:  #F5D060;
+  --gold-dark:   #8B6914;
+  --teal:        #00CED1;
+  --teal-glow:   #40E0D0;
+  --forest-dark: #060E06;
+  --forest-mid:  #0F2A10;
+  --parchment:   #F5E8C0;
+  --pink:        #DD44AA;
+}
 
-  html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; }
 
-  body {
-    font-family: 'IM Fell English', Georgia, serif;
-    background: var(--forest-dark);
-    color: var(--parchment);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+body {
+  font-family: 'IM Fell English', Georgia, serif;
+  background: var(--forest-dark);
+  color: var(--parchment);
+  overflow-x: hidden;
+}
 
-  .bg-layer {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    background:
-      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(0,150,100,0.12) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 50% at 80% 20%, rgba(0,180,160,0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(20,80,20,0.3) 0%, transparent 70%),
-      linear-gradient(180deg, #060E06 0%, #0A1A0A 30%, #0C200C 60%, #060E06 100%);
-    pointer-events: none;
-  }
+/* ─── BACKGROUND ─── */
+.bg-fixed {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 45% at 15% 85%, rgba(0,140,90,0.10) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at 85% 15%, rgba(0,180,160,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(10,60,10,0.25) 0%, transparent 70%),
+    linear-gradient(180deg, #050D05 0%, #080F08 40%, #0A1A0A 70%, #060E06 100%);
+}
 
-  .fireflies { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+/* Noise grain */
+.bg-fixed::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.4; pointer-events: none;
+}
 
-  .firefly {
-    position: absolute;
-    width: 3px; height: 3px;
-    border-radius: 50%;
-    background: var(--gold-light);
-    box-shadow: 0 0 6px 2px var(--gold-light);
-    animation: float-fly linear infinite;
-    opacity: 0;
-  }
+/* ─── FIREFLIES ─── */
+.fireflies { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+.firefly {
+  position: absolute; border-radius: 50%;
+  animation: firefly-drift linear infinite; opacity: 0;
+}
+@keyframes firefly-drift {
+  0%   { transform: translate(0,0) scale(0);   opacity: 0; }
+  8%   { opacity: 1;  transform: translate(8px,-18px) scale(1); }
+  50%  { opacity: 0.45; transform: translate(-12px,-55px) scale(0.75); }
+  92%  { opacity: 0.7; transform: translate(4px,-100px) scale(0.9); }
+  100% { transform: translate(0,-130px) scale(0); opacity: 0; }
+}
 
-  @keyframes float-fly {
-    0%   { transform: translate(0,0) scale(0); opacity: 0; }
-    10%  { opacity: 0.9; transform: translate(10px,-20px) scale(1); }
-    50%  { opacity: 0.5; transform: translate(-15px,-60px) scale(0.8); }
-    90%  { opacity: 0.8; transform: translate(5px,-100px) scale(1); }
-    100% { transform: translate(0px,-130px) scale(0); opacity: 0; }
-  }
+/* ─── AUDIO TOGGLE ─── */
+#audioBtn {
+  position: fixed; bottom: 28px; right: 28px; z-index: 200;
+  width: 44px; height: 44px;
+  background: rgba(10,26,10,0.85);
+  border: 1px solid rgba(212,160,23,0.35);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  box-shadow: 0 0 16px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+}
+#audioBtn:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(212,160,23,0.3); transform: scale(1.08); }
+#audioBtn svg { width: 18px; height: 18px; fill: var(--gold-light); transition: fill 0.2s; }
+#audioBtn.muted svg { fill: rgba(245,232,192,0.3); }
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 32px;
-    background: linear-gradient(180deg, rgba(5,12,5,0.95) 0%, rgba(5,12,5,0.0) 100%);
-    border-bottom: 1px solid rgba(212,160,23,0.15);
-  }
+/* Pulsing ring when playing */
+#audioBtn::before {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid rgba(212,160,23,0.2);
+  animation: ring-pulse 2.5s ease-in-out infinite;
+}
+@keyframes ring-pulse {
+  0%,100% { transform: scale(1); opacity: 0.4; }
+  50%      { transform: scale(1.2); opacity: 0; }
+}
+#audioBtn.muted::before { display: none; }
 
-  .nav-brand {
-    font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600;
-    letter-spacing: 3px; color: var(--gold); text-transform: uppercase; opacity: 0.85;
-  }
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 40px;
+  background: linear-gradient(180deg, rgba(5,10,5,0.96) 0%, transparent 100%);
+}
+nav::after {
+  content: ''; position: absolute; bottom: 0; left: 40px; right: 40px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,160,23,0.18), transparent);
+}
+.nav-brand {
+  font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 4px; color: var(--gold); text-transform: uppercase; opacity: 0.85;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-brand::before {
+  content: ''; width: 6px; height: 6px; background: var(--teal);
+  border-radius: 50%; box-shadow: 0 0 8px var(--teal-glow); flex-shrink: 0;
+}
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: rgba(245,232,192,0.5); text-decoration: none;
+  transition: color 0.25s, opacity 0.25s; position: relative; padding-bottom: 2px;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+  background: var(--gold-light); transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--gold-light); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 7px 20px;
+  background: rgba(212,160,23,0.08);
+  border: 1px solid rgba(212,160,23,0.35) !important;
+  border-radius: 1px; color: var(--gold) !important;
+  transition: background 0.25s, border-color 0.25s !important;
+}
+.nav-cta::after { display: none !important; }
+.nav-cta:hover { background: rgba(212,160,23,0.16) !important; border-color: var(--gold) !important; }
 
-  .nav-links { display: flex; gap: 28px; list-style: none; }
-  .nav-links a {
-    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; color: rgba(245,232,192,0.6); text-decoration: none; transition: color 0.3s;
-  }
-  .nav-links a:hover { color: var(--gold-light); }
+/* ─── HERO ─── */
+.hero {
+  position: relative; z-index: 10; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 120px 24px 80px; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png');
+  background-size: cover; background-position: center 30%;
+  opacity: 0.18; filter: saturate(1.6) brightness(0.6);
+  transform: scale(1.05);
+}
+.hero-vignette {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 65% 55% at 50% 55%, transparent 0%, rgba(6,14,6,0.65) 75%),
+    linear-gradient(180deg, rgba(5,10,5,0.55) 0%, transparent 25%, transparent 55%, rgba(5,10,5,0.95) 100%);
+}
 
-  .hero {
-    position: relative; z-index: 10; min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; padding: 100px 20px 60px; overflow: hidden;
-  }
+/* Horizontal rule lines decorating hero */
+.hero-rule-top, .hero-rule-bottom {
+  position: absolute; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212,160,23,0.25) 30%, rgba(212,160,23,0.25) 70%, transparent 100%);
+}
+.hero-rule-top { top: 90px; }
+.hero-rule-bottom { bottom: 80px; }
 
-  .hero-bg-img {
-    position: absolute; inset: 0;
-    background-image: url('ChatGPT_Image_Apr_12__2026__05_43_32_PM.png');
-    background-size: cover; background-position: center 30%;
-    opacity: 0.25; filter: saturate(1.4) brightness(0.7);
-  }
+.badge {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: 'Cinzel', serif; font-size: 10px;
+  letter-spacing: 6px; text-transform: uppercase;
+  color: var(--gold); opacity: 0.65;
+  margin-bottom: 28px;
+  animation: appear 1s ease-out both;
+}
+.badge-dot {
+  width: 4px; height: 4px; background: var(--teal); border-radius: 50%;
+  box-shadow: 0 0 6px var(--teal); flex-shrink: 0;
+}
 
-  .hero-vignette {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 70% 60% at 50% 50%, transparent 0%, rgba(6,14,6,0.7) 80%),
-      linear-gradient(to bottom, rgba(6,14,6,0.6) 0%, transparent 30%, transparent 60%, rgba(6,14,6,0.9) 100%);
-  }
+.hero-logo {
+  position: relative; z-index: 2;
+  margin-bottom: 0;
+  animation: logo-in 1.2s 0.1s ease-out both;
+}
+@keyframes logo-in {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); filter: blur(6px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+.hero-logo img {
+  max-width: 500px; width: 88vw;
+  filter:
+    drop-shadow(0 0 35px rgba(212,160,23,0.45))
+    drop-shadow(0 0 70px rgba(0,200,200,0.18));
+  animation: logo-breathe 5s 1.5s ease-in-out infinite;
+}
+@keyframes logo-breathe {
+  0%,100% { filter: drop-shadow(0 0 35px rgba(212,160,23,0.45)) drop-shadow(0 0 70px rgba(0,200,200,0.18)); }
+  50%      { filter: drop-shadow(0 0 55px rgba(212,160,23,0.75)) drop-shadow(0 0 90px rgba(0,220,210,0.30)); }
+}
 
-  .publisher-badge {
-    position: relative; font-family: 'Cinzel', serif; font-size: 11px;
-    letter-spacing: 5px; text-transform: uppercase; color: var(--gold); opacity: 0.7;
-    margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
-  }
-  .publisher-badge::before, .publisher-badge::after {
-    content: ''; width: 40px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold)); opacity: 0.5;
-  }
-  .publisher-badge::after { background: linear-gradient(90deg, var(--gold), transparent); }
+.hero-sub {
+  position: relative; z-index: 2;
+  font-family: 'IM Fell English', serif; font-style: italic;
+  font-size: 15px; letter-spacing: 2px;
+  color: rgba(245,232,192,0.5);
+  margin-top: 10px; margin-bottom: 44px;
+  animation: appear 1s 0.5s ease-out both;
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: none; }
+}
 
-  .hero-logo { position: relative; margin-bottom: 8px; animation: logo-appear 1.2s ease-out both; }
+.hero-actions { position: relative; z-index: 2; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: appear 1s 0.75s ease-out both; }
 
-  @keyframes logo-appear {
-    from { opacity: 0; transform: translateY(30px) scale(0.95); filter: blur(8px); }
-    to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-  }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 36px;
+  background: linear-gradient(135deg, #7A5800, #C8950F, #F0C840, #C8950F);
+  background-size: 250% 100%;
+  border: none; border-radius: 2px;
+  font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: #150900; text-decoration: none;
+  box-shadow: 0 0 20px rgba(212,160,23,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
+  transition: transform 0.2s, box-shadow 0.3s;
+  animation: shimmer 3s 2s linear infinite;
+  position: relative; overflow: hidden;
+}
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 250% 50%; }
+}
+.btn-primary::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
+  transform: translateX(-100%); transition: transform 0.5s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(212,160,23,0.5); }
+.btn-primary:hover::after { transform: translateX(100%); }
 
-  .hero-logo img {
-    max-width: 520px; width: 90vw;
-    filter: drop-shadow(0 0 40px rgba(212,160,23,0.5)) drop-shadow(0 0 80px rgba(0,200,200,0.2));
-    animation: logo-pulse 4s ease-in-out infinite;
-  }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 28px;
+  background: transparent;
+  border: 1px solid rgba(245,232,192,0.18); border-radius: 2px;
+  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2.5px;
+  text-transform: uppercase; color: rgba(245,232,192,0.55); text-decoration: none;
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+.btn-secondary:hover { border-color: rgba(245,232,192,0.45); color: var(--parchment); background: rgba(245,232,192,0.04); }
 
-  @keyframes logo-pulse {
-    0%, 100% { filter: drop-shadow(0 0 40px rgba(212,160,23,0.5)) drop-shadow(0 0 80px rgba(0,200,200,0.2)); }
-    50%       { filter: drop-shadow(0 0 60px rgba(212,160,23,0.8)) drop-shadow(0 0 100px rgba(0,220,210,0.35)); }
-  }
+.scroll-hint {
+  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10;
+  display: flex; flex-direction: column; align-items: center; gap: 7px; opacity: 0.35;
+  animation: appear 1s 1.8s ease-out both;
+}
+.scroll-hint span { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
+.scroll-needle { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: needle-drop 1.6s ease-in-out infinite; }
+@keyframes needle-drop {
+  0%   { transform-origin: top; transform: scaleY(0); opacity: 1; }
+  60%  { transform: scaleY(1); opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
+}
 
-  .hero-subtitle {
-    position: relative; font-family: 'IM Fell English', serif; font-style: italic;
-    font-size: 16px; color: rgba(245,232,192,0.65); letter-spacing: 1px;
-    margin-bottom: 40px; animation: fade-up 1s 0.4s ease-out both;
-  }
+/* ─── DIVIDER ─── */
+.divider {
+  position: relative; z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 40px; max-width: 600px; margin: 0 auto; gap: 14px;
+}
+.div-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,160,23,0.3), transparent); }
+.div-gem {
+  width: 7px; height: 7px; transform: rotate(45deg); flex-shrink: 0;
+}
+.div-gem.teal  { background: var(--teal);  box-shadow: 0 0 8px var(--teal-glow); }
+.div-gem.pink  { background: var(--pink);  box-shadow: 0 0 8px var(--pink); }
+.div-gem.gold  { background: var(--gold-light); box-shadow: 0 0 8px var(--gold); }
 
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* ─── SECTIONS ─── */
+.section { position: relative; z-index: 10; max-width: 1080px; margin: 0 auto; padding: 80px 40px; }
 
-  .hero-cta {
-    position: relative; display: inline-flex; align-items: center; gap: 10px;
-    padding: 14px 40px;
-    background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light), var(--gold));
-    background-size: 300% 100%; border: none; border-radius: 2px;
-    font-family: 'Cinzel', serif; font-size: 13px; font-weight: 700;
-    letter-spacing: 3px; text-transform: uppercase; color: #1A0E00; text-decoration: none;
-    animation: fade-up 1s 0.7s ease-out both, shimmer-bg 3s 1.7s linear infinite;
-    transition: transform 0.2s, box-shadow 0.3s;
-    box-shadow: 0 0 20px rgba(212,160,23,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
-    overflow: hidden;
-  }
+.label {
+  font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 5.5px;
+  text-transform: uppercase; color: var(--teal); opacity: 0.75; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.label::before { content: ''; width: 24px; height: 1px; background: var(--teal); opacity: 0.6; }
 
-  @keyframes shimmer-bg {
-    0%   { background-position: 0% 50%; }
-    100% { background-position: 300% 50%; }
-  }
+.title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(20px, 3.5vw, 34px);
+  color: var(--gold-light);
+  text-shadow: 0 0 28px rgba(212,160,23,0.35);
+  line-height: 1.25; margin-bottom: 18px;
+}
 
-  .hero-cta:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 4px 30px rgba(212,160,23,0.6), 0 0 60px rgba(212,160,23,0.2);
-  }
+.body-text {
+  font-family: 'IM Fell English', serif; font-size: 15.5px; line-height: 1.9;
+  color: rgba(245,232,192,0.65); max-width: 640px;
+}
+.body-text strong { color: var(--gold); font-style: normal; font-weight: 600; }
 
-  .hero-cta::after {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
-    transform: translateX(-100%); transition: transform 0.5s;
-  }
-  .hero-cta:hover::after { transform: translateX(100%); }
+/* ─── ABOUT GRID ─── */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
 
-  .scroll-hint {
-    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-    opacity: 0.4; animation: fade-up 1s 1.5s ease-out both;
-  }
-  .scroll-hint span { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); }
-  .scroll-arrow { width: 1px; height: 32px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scroll-drop 1.5s ease-in-out infinite; }
+.about-img-wrap {
+  position: relative; border-radius: 3px; overflow: hidden;
+  border: 1px solid rgba(212,160,23,0.15);
+  box-shadow: 0 0 50px rgba(0,150,120,0.10), 0 20px 60px rgba(0,0,0,0.5);
+}
+.about-img-wrap img { width: 100%; display: block; filter: brightness(0.82) saturate(1.25); transition: filter 0.5s, transform 0.6s ease; }
+.about-img-wrap:hover img { filter: brightness(0.95) saturate(1.45); transform: scale(1.04); }
+/* Teal corner accent */
+.about-img-wrap::before, .about-img-wrap::after {
+  content: ''; position: absolute; z-index: 2; pointer-events: none;
+}
+.about-img-wrap::before {
+  inset: 0; background: linear-gradient(135deg, rgba(0,206,209,0.07) 0%, transparent 50%);
+}
+.about-img-wrap::after {
+  top: 0; right: 0; width: 40px; height: 40px;
+  border-top: 1px solid rgba(212,160,23,0.4); border-right: 1px solid rgba(212,160,23,0.4);
+}
 
-  @keyframes scroll-drop {
-    0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
-    50%  { transform: scaleY(1); opacity: 1; }
-    100% { transform: scaleY(1); opacity: 0; }
-  }
+/* ─── STATS ─── */
+.stats-band {
+  position: relative; z-index: 10;
+  padding: 40px 40px;
+  background: linear-gradient(90deg, transparent, rgba(15,42,15,0.55), transparent);
+  border-top: 1px solid rgba(212,160,23,0.08);
+  border-bottom: 1px solid rgba(212,160,23,0.08);
+}
+.stats-inner { display: flex; justify-content: center; gap: 72px; flex-wrap: wrap; max-width: 640px; margin: 0 auto; }
+.stat { text-align: center; }
+.stat-num {
+  font-family: 'Cinzel Decorative', serif; font-size: 30px;
+  color: var(--gold-light); text-shadow: 0 0 20px rgba(212,160,23,0.45);
+  display: block; line-height: 1; margin-bottom: 8px;
+}
+.stat-num.teal { color: var(--teal); text-shadow: 0 0 20px var(--teal-glow); }
+.stat-label { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(245,232,192,0.35); }
 
-  .ornamental-divider {
-    position: relative; z-index: 10; display: flex; align-items: center;
-    justify-content: center; padding: 0 32px; margin: 0 auto; max-width: 700px; gap: 16px;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,160,23,0.4), transparent); }
-  .divider-gem { width: 8px; height: 8px; background: var(--teal-crystal); transform: rotate(45deg); box-shadow: 0 0 8px var(--teal-glow); flex-shrink: 0; }
+/* ─── MAP SECTION ─── */
+.map-section { position: relative; z-index: 10; max-width: 1080px; margin: 0 auto; padding: 60px 40px 80px; }
 
-  .section { position: relative; z-index: 10; max-width: 1100px; margin: 0 auto; padding: 80px 32px; }
+.map-card {
+  position: relative; margin-top: 36px; border-radius: 3px; overflow: hidden;
+  border: 1px solid rgba(212,160,23,0.18);
+  box-shadow: 0 0 80px rgba(0,150,100,0.07), 0 30px 80px rgba(0,0,0,0.5);
+  transition: box-shadow 0.4s;
+}
+.map-card:hover { box-shadow: 0 0 80px rgba(0,150,100,0.14), 0 30px 80px rgba(0,0,0,0.6); }
+.map-card img {
+  width: 100%; height: 380px; object-fit: cover; object-position: center 38%;
+  filter: saturate(1.35) brightness(0.65); display: block; transition: filter 0.5s, transform 0.6s ease;
+}
+.map-card:hover img { filter: saturate(1.55) brightness(0.8); transform: scale(1.03); }
+.map-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
+  padding: 36px 40px;
+  background: linear-gradient(to top, rgba(5,10,5,0.92) 0%, rgba(5,10,5,0.3) 50%, transparent 100%);
+}
+.map-title-big {
+  font-family: 'Cinzel Decorative', serif; font-size: clamp(22px, 4vw, 38px);
+  color: var(--gold-light); text-shadow: 0 0 24px rgba(212,160,23,0.55);
+  line-height: 1.1; margin-bottom: 6px;
+}
+.map-tag {
+  font-family: 'IM Fell English', serif; font-style: italic; font-size: 14px;
+  color: rgba(245,232,192,0.45); margin-bottom: 22px;
+}
+.map-btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 10px 26px;
+  background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
+  border: 1px solid rgba(212,160,23,0.45); border-radius: 1px;
+  font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--gold-light); text-decoration: none;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.map-btn:hover { background: rgba(212,160,23,0.12); border-color: var(--gold); box-shadow: 0 0 20px rgba(212,160,23,0.25); }
+.map-btn svg { width: 12px; height: 12px; fill: var(--gold-light); }
 
-  .section-label { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-bottom: 12px; }
-  .section-title { font-family: 'Cinzel Decorative', serif; font-size: clamp(22px, 4vw, 38px); color: var(--gold-light); text-shadow: 0 0 30px rgba(212,160,23,0.4); margin-bottom: 16px; line-height: 1.2; }
-  .section-body { font-family: 'IM Fell English', serif; font-size: 16px; line-height: 1.85; color: rgba(245,232,192,0.72); max-width: 680px; }
+/* ─── FEATURES ─── */
+.features-section { position: relative; z-index: 10; max-width: 1080px; margin: 0 auto; padding: 60px 40px 80px; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 44px; }
 
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .about-visual { position: relative; border-radius: 2px; overflow: hidden; border: 1px solid rgba(212,160,23,0.2); box-shadow: 0 0 40px rgba(0,150,120,0.15); }
-  .about-visual img { width: 100%; display: block; filter: brightness(0.85) saturate(1.2); transition: filter 0.4s, transform 0.6s; }
-  .about-visual:hover img { filter: brightness(1) saturate(1.4); transform: scale(1.03); }
-  .about-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top right, rgba(0,200,180,0.08), transparent 60%); pointer-events: none; }
+.feature-card {
+  position: relative; overflow: hidden; padding: 26px 22px;
+  background: linear-gradient(155deg, rgba(15,42,15,0.65), rgba(6,14,6,0.85));
+  border: 1px solid rgba(212,160,23,0.10); border-radius: 3px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  cursor: default;
+}
+.feature-card:hover {
+  border-color: rgba(212,160,23,0.28); transform: translateY(-5px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 18px rgba(212,160,23,0.06);
+}
+.feature-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0;
+  background: linear-gradient(to bottom, var(--gold), var(--teal));
+  transition: height 0.4s ease;
+}
+.feature-card:hover::before { height: 100%; }
+.feature-card::after {
+  content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px;
+  background: linear-gradient(to left, transparent, rgba(212,160,23,0.2));
+  transition: width 0.4s 0.1s ease;
+}
+.feature-card:hover::after { width: 100%; }
 
-  .features-section { padding: 60px 32px 80px; max-width: 1100px; margin: 0 auto; position: relative; z-index: 10; }
-  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 48px; }
+.feat-icon { font-size: 26px; margin-bottom: 13px; display: block; filter: drop-shadow(0 0 5px rgba(212,160,23,0.35)); }
+.feat-title {
+  font-family: 'Cinzel', serif; font-size: 11.5px; font-weight: 700;
+  letter-spacing: 1.8px; color: var(--gold-light); margin-bottom: 9px; text-transform: uppercase;
+}
+.feat-desc {
+  font-family: 'IM Fell English', serif; font-size: 13.5px; line-height: 1.7;
+  color: rgba(245,232,192,0.48); font-style: italic;
+}
 
-  .feature-card {
-    background: linear-gradient(135deg, rgba(15,42,15,0.8), rgba(10,26,10,0.9));
-    border: 1px solid rgba(212,160,23,0.12); border-radius: 2px; padding: 28px 24px;
-    position: relative; overflow: hidden;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; cursor: default;
-  }
-  .feature-card:hover { border-color: rgba(212,160,23,0.35); transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 20px rgba(212,160,23,0.08); }
-  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0%; background: linear-gradient(to bottom, var(--gold), var(--teal-crystal)); transition: height 0.4s ease; }
-  .feature-card:hover::before { height: 100%; }
-  .feature-icon { font-size: 28px; margin-bottom: 14px; display: block; filter: drop-shadow(0 0 6px rgba(212,160,23,0.4)); }
-  .feature-title { font-family: 'Cinzel', serif; font-size: 13px; font-weight: 600; letter-spacing: 1.5px; color: var(--gold-light); margin-bottom: 10px; text-transform: uppercase; }
-  .feature-desc { font-family: 'IM Fell English', serif; font-size: 14px; line-height: 1.7; color: rgba(245,232,192,0.55); font-style: italic; }
+/* ─── FOOTER ─── */
+footer {
+  position: relative; z-index: 10;
+  padding: 52px 40px 40px; text-align: center;
+  border-top: 1px solid rgba(212,160,23,0.08);
+}
+.footer-brand { font-family: 'Cinzel Decorative', serif; font-size: 17px; color: var(--gold); text-shadow: 0 0 18px rgba(212,160,23,0.35); margin-bottom: 6px; }
+.footer-tagline { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(245,232,192,0.22); margin-bottom: 26px; }
+.footer-nav { display: flex; justify-content: center; gap: 24px; list-style: none; margin-bottom: 32px; }
+.footer-nav a { font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(245,232,192,0.28); text-decoration: none; transition: color 0.3s; }
+.footer-nav a:hover { color: var(--gold-light); }
+.footer-copy { font-family: 'IM Fell English', serif; font-size: 12px; color: rgba(245,232,192,0.16); font-style: italic; }
 
-  .map-section { position: relative; z-index: 10; padding: 60px 32px 80px; max-width: 1100px; margin: 0 auto; }
-  .map-card { position: relative; border: 1px solid rgba(212,160,23,0.2); border-radius: 2px; overflow: hidden; background: rgba(5,12,5,0.5); margin-top: 40px; box-shadow: 0 0 60px rgba(0,150,100,0.08); }
-  .map-card img { width: 100%; height: 340px; object-fit: cover; object-position: center 40%; filter: saturate(1.3) brightness(0.7); display: block; transition: filter 0.5s; }
-  .map-card:hover img { filter: saturate(1.5) brightness(0.85); }
-  .map-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; padding: 32px; background: linear-gradient(to top, rgba(5,12,5,0.9) 0%, transparent 60%); }
-  .map-name { font-family: 'Cinzel Decorative', serif; font-size: clamp(20px, 4vw, 32px); color: var(--gold-light); text-shadow: 0 0 20px rgba(212,160,23,0.6); margin-bottom: 6px; }
-  .map-tagline { font-family: 'IM Fell English', serif; font-style: italic; font-size: 14px; color: rgba(245,232,192,0.55); margin-bottom: 20px; }
-  .map-play-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 28px; background: transparent; border: 1px solid rgba(212,160,23,0.5); border-radius: 1px; font-family: 'Cinzel', serif; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold-light); text-decoration: none; transition: all 0.3s; }
-  .map-play-btn:hover { background: rgba(212,160,23,0.12); border-color: var(--gold); box-shadow: 0 0 20px rgba(212,160,23,0.2); }
-  .map-play-btn svg { width: 14px; height: 14px; fill: var(--gold-light); }
-
-  .stats-bar { position: relative; z-index: 10; background: linear-gradient(90deg, rgba(10,26,10,0.0), rgba(15,42,15,0.8), rgba(10,26,10,0.0)); border-top: 1px solid rgba(212,160,23,0.1); border-bottom: 1px solid rgba(212,160,23,0.1); padding: 36px 32px; }
-  .stats-grid { display: flex; justify-content: center; gap: 60px; max-width: 700px; margin: 0 auto; flex-wrap: wrap; }
-  .stat-item { text-align: center; }
-  .stat-number { font-family: 'Cinzel Decorative', serif; font-size: 28px; color: var(--gold-light); text-shadow: 0 0 20px rgba(212,160,23,0.5); display: block; line-height: 1; margin-bottom: 6px; }
-  .stat-label { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(245,232,192,0.4); }
-
-  footer { position: relative; z-index: 10; text-align: center; padding: 48px 32px; border-top: 1px solid rgba(212,160,23,0.08); }
-  .footer-brand { font-family: 'Cinzel Decorative', serif; font-size: 18px; color: var(--gold); text-shadow: 0 0 20px rgba(212,160,23,0.4); margin-bottom: 8px; }
-  .footer-sub { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 3px; color: rgba(245,232,192,0.25); text-transform: uppercase; margin-bottom: 24px; }
-  .footer-links { display: flex; justify-content: center; gap: 24px; list-style: none; margin-bottom: 32px; }
-  .footer-links a { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(245,232,192,0.3); text-decoration: none; transition: color 0.3s; }
-  .footer-links a:hover { color: var(--gold); }
-  .footer-copy { font-family: 'IM Fell English', serif; font-size: 12px; color: rgba(245,232,192,0.18); font-style: italic; }
-
-  .crystal-accent { display: inline-block; color: var(--teal-crystal); text-shadow: 0 0 10px var(--teal-glow); }
-
-  @media (max-width: 700px) {
-    .about-grid { grid-template-columns: 1fr; gap: 32px; }
-    .nav-links { display: none; }
-    .stats-grid { gap: 32px; }
-  }
+/* ─── RESPONSIVE ─── */
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .about-grid { grid-template-columns: 1fr; gap: 36px; }
+  .stats-inner { gap: 40px; }
+  .section, .map-section, .features-section { padding-left: 20px; padding-right: 20px; }
+  #audioBtn { bottom: 20px; right: 20px; }
+}
 </style>
 </head>
 <body>
 
-<div class="bg-layer"></div>
+<div class="bg-fixed"></div>
 <div class="fireflies" id="fireflies"></div>
 
-<!-- HIDDEN AUDIO PLAYER -->
-<audio id="bgMusic" preload="auto" style="display:none;"></audio>
+<!-- ─── AUDIO ─── -->
+<!-- We use TWO audio elements for seamless crossfade between tracks -->
+<audio id="audioA" preload="auto" style="display:none;"></audio>
+<audio id="audioB" preload="auto" style="display:none;"></audio>
 
-<!-- NAV -->
+<!-- ─── AUDIO TOGGLE ─── -->
+<button id="audioBtn" title="Toggle music" aria-label="Toggle background music">
+  <!-- Speaker icon (playing) -->
+  <svg id="iconPlay" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+  <!-- Muted icon -->
+  <svg id="iconMute" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+</button>
+
+<!-- ─── NAV ─── -->
 <nav>
   <div class="nav-brand">Elaria Official</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#maps">Maps</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank">Play Now</a></li>
+    <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="nav-cta">Play Now</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
+<!-- ─── HERO ─── -->
 <section class="hero">
-  <div class="hero-bg-img"></div>
+  <div class="hero-bg"></div>
   <div class="hero-vignette"></div>
-  <div class="publisher-badge">Elaria Official</div>
-  <div class="hero-logo">
-    <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/refs/heads/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Mount Elaria Logo">
+  <div class="hero-rule-top"></div>
+  <div class="hero-rule-bottom"></div>
+
+  <div class="badge">
+    <div class="badge-dot"></div>
+    Elaria Official
+    <div class="badge-dot"></div>
   </div>
-  <p class="hero-subtitle">Journey of the Silent Peaks</p>
-  <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="hero-cta">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-    Play on Roblox
-  </a>
+
+  <div class="hero-logo">
+    <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Mount Elaria">
+  </div>
+  <p class="hero-sub">Journey of the Silent Peaks</p>
+
+  <div class="hero-actions">
+    <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="btn-primary">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      Play on Roblox
+    </a>
+    <a href="#about" class="btn-secondary">Explore World</a>
+  </div>
+
   <div class="scroll-hint">
-    <span>Explore</span>
-    <div class="scroll-arrow"></div>
+    <span>Scroll</span>
+    <div class="scroll-needle"></div>
   </div>
 </section>
 
-<div class="ornamental-divider">
-  <div class="divider-line"></div>
-  <div class="divider-gem"></div>
-  <div class="divider-line"></div>
+<!-- ─── DIVIDER ─── -->
+<div class="divider" style="margin-top:0; margin-bottom:0;">
+  <div class="div-line"></div>
+  <div class="div-gem teal"></div>
+  <div class="div-line"></div>
 </div>
 
-<!-- ABOUT -->
+<!-- ─── ABOUT ─── -->
 <section class="section" id="about">
   <div class="about-grid">
     <div>
-      <p class="section-label">The World</p>
-      <h2 class="section-title">A Realm Forged in<br><span class="crystal-accent">Ancient Magic</span></h2>
-      <p class="section-body">
+      <p class="label">The World</p>
+      <h2 class="title">A Realm Forged in<br>Ancient Magic</h2>
+      <p class="body-text">
         Mount Elaria is a mystical open world nestled between glowing crystal caves, enchanted autumn forests, and ancient Celtic ruins humming with forgotten power. Every path leads to discovery — where mushrooms glow in the dark and sacred stones guard the secrets of a lost civilization.
       </p>
       <br>
-      <p class="section-body">
-        Created by <strong style="color: var(--gold); font-style: normal;">Elaria Official</strong>, this Roblox experience brings a handcrafted fantasy world to life, inviting adventurers to explore, survive, and uncover the lore of the silent peaks.
+      <p class="body-text">
+        Created by <strong>Elaria Official</strong>, this Roblox experience brings a handcrafted fantasy world to life, inviting adventurers to explore, survive, and uncover the lore of the silent peaks.
       </p>
     </div>
-    <div class="about-visual">
-      <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/refs/heads/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Mount Elaria world">
+    <div class="about-img-wrap">
+      <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Mount Elaria world">
     </div>
   </div>
 </section>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stats-grid">
-    <div class="stat-item">
-      <span class="stat-number">∞</span>
+<!-- ─── STATS ─── -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-num">∞</span>
       <span class="stat-label">Adventures Await</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-number" style="color: var(--teal-crystal); text-shadow: 0 0 20px var(--teal-glow);">1</span>
+    <div class="stat">
+      <span class="stat-num teal">1</span>
       <span class="stat-label">Active Map</span>
     </div>
-    <div class="stat-item">
-      <span class="stat-number">⚔</span>
+    <div class="stat">
+      <span class="stat-num">⚔</span>
       <span class="stat-label">Legendary Quests</span>
     </div>
   </div>
 </div>
 
-<!-- MAP -->
+<!-- ─── MAP ─── -->
 <section class="map-section" id="maps">
-  <p class="section-label">Hub Map</p>
-  <h2 class="section-title">Mount Elaria</h2>
-  <p class="section-body" style="margin-bottom: 0;">Our flagship world — a living, breathing landscape of magic, mystery, and wonder.</p>
+  <p class="label">Hub Map</p>
+  <h2 class="title">Mount Elaria</h2>
+  <p class="body-text">Our flagship world — a living, breathing landscape of magic, mystery, and wonder.</p>
   <div class="map-card">
-    <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/refs/heads/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png" alt="Mount Elaria map thumbnail">
+    <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png" alt="Mount Elaria">
     <div class="map-overlay">
-      <div class="map-name">Mount Elaria</div>
-      <div class="map-tagline">Journey of the Silent Peaks</div>
-      <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="map-play-btn">
+      <div class="map-title-big">Mount Elaria</div>
+      <div class="map-tag">Journey of the Silent Peaks</div>
+      <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="map-btn">
         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         Enter World
       </a>
@@ -357,55 +563,56 @@
   </div>
 </section>
 
-<!-- FEATURES -->
+<!-- ─── FEATURES ─── -->
 <section class="features-section" id="features">
-  <p class="section-label">What Awaits</p>
-  <h2 class="section-title">The Wonders of Elaria</h2>
+  <p class="label">What Awaits</p>
+  <h2 class="title">The Wonders of Elaria</h2>
   <div class="features-grid">
     <div class="feature-card">
-      <span class="feature-icon">🔮</span>
-      <div class="feature-title">Crystal Caverns</div>
-      <p class="feature-desc">Descend into glowing blue and pink crystal formations deep beneath the mountain.</p>
+      <span class="feat-icon">🔮</span>
+      <div class="feat-title">Crystal Caverns</div>
+      <p class="feat-desc">Descend into glowing blue and pink crystal formations deep beneath the mountain.</p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🍄</span>
-      <div class="feature-title">Enchanted Groves</div>
-      <p class="feature-desc">Wander through forests lit by glowing mushrooms and ancient trees twisted by magic.</p>
+      <span class="feat-icon">🍄</span>
+      <div class="feat-title">Enchanted Groves</div>
+      <p class="feat-desc">Wander through forests lit by glowing mushrooms and ancient trees twisted by magic.</p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">⚗️</span>
-      <div class="feature-title">Ancient Ruins</div>
-      <p class="feature-desc">Discover Celtic standing stones engraved with forgotten runes and hidden lore scrolls.</p>
+      <span class="feat-icon">⚗️</span>
+      <div class="feat-title">Ancient Ruins</div>
+      <p class="feat-desc">Discover Celtic standing stones engraved with forgotten runes and hidden lore scrolls.</p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">🌿</span>
-      <div class="feature-title">Living World</div>
-      <p class="feature-desc">A handcrafted open world that breathes with ambience, secrets, and exploration paths.</p>
+      <span class="feat-icon">🌿</span>
+      <div class="feat-title">Living World</div>
+      <p class="feat-desc">A handcrafted open world that breathes with ambience, secrets, and exploration paths.</p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">⚔️</span>
-      <div class="feature-title">Legendary Weapons</div>
-      <p class="feature-desc">Find swords buried in stone amidst wildflower fields, waiting for their worthy champion.</p>
+      <span class="feat-icon">⚔️</span>
+      <div class="feat-title">Legendary Weapons</div>
+      <p class="feat-desc">Find swords buried in stone amidst wildflower fields, waiting for their worthy champion.</p>
     </div>
     <div class="feature-card">
-      <span class="feature-icon">✨</span>
-      <div class="feature-title">Magic & Lore</div>
-      <p class="feature-desc">Uncover the story of Mount Elaria — a realm where magic is not cast, but awakened.</p>
+      <span class="feat-icon">✨</span>
+      <div class="feat-title">Magic & Lore</div>
+      <p class="feat-desc">Uncover the story of Mount Elaria — a realm where magic is not cast, but awakened.</p>
     </div>
   </div>
 </section>
 
-<div class="ornamental-divider">
-  <div class="divider-line"></div>
-  <div class="divider-gem" style="background: var(--pink-crystal); box-shadow: 0 0 8px var(--pink-crystal);"></div>
-  <div class="divider-line"></div>
+<!-- ─── DIVIDER ─── -->
+<div class="divider">
+  <div class="div-line"></div>
+  <div class="div-gem pink"></div>
+  <div class="div-line"></div>
 </div>
 
-<!-- FOOTER -->
+<!-- ─── FOOTER ─── -->
 <footer>
   <div class="footer-brand">Elaria Official</div>
-  <div class="footer-sub">Roblox Game Publisher</div>
-  <ul class="footer-links">
+  <div class="footer-tagline">Roblox Game Publisher</div>
+  <ul class="footer-nav">
     <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank">Play Now</a></li>
     <li><a href="#">Community</a></li>
     <li><a href="#">Updates</a></li>
@@ -414,84 +621,166 @@
 </footer>
 
 <script>
-  /* ===== FIREFLIES ===== */
-  const ff = document.getElementById('fireflies');
-  for (let i = 0; i < 28; i++) {
-    const f = document.createElement('div');
-    f.className = 'firefly';
-    f.style.cssText = `
+/* ════════════════════════════════════
+   FIREFLIES
+════════════════════════════════════ */
+(function() {
+  const container = document.getElementById('fireflies');
+  const colors = ['#F5D060', '#40E0D0', '#F5D060', '#F5D060', '#DD88FF'];
+  for (let i = 0; i < 30; i++) {
+    const el = document.createElement('div');
+    el.className = 'firefly';
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    const size = 2 + Math.random() * 2;
+    el.style.cssText = `
       left:${Math.random()*100}%;
-      top:${20+Math.random()*70}%;
-      animation-duration:${4+Math.random()*6}s;
-      animation-delay:${Math.random()*8}s;
-      opacity:0;
-      background:${Math.random()>0.7?'#40E0D0':'#F5D060'};
-      box-shadow:0 0 ${4+Math.random()*4}px 2px ${Math.random()>0.7?'#40E0D0':'#F5D060'};
-      width:${2+Math.random()*2}px;
-      height:${2+Math.random()*2}px;
+      top:${15+Math.random()*72}%;
+      width:${size}px; height:${size}px;
+      background:${c};
+      box-shadow:0 0 ${4+Math.random()*4}px 2px ${c};
+      animation-duration:${5+Math.random()*7}s;
+      animation-delay:${Math.random()*10}s;
     `;
-    ff.appendChild(f);
+    container.appendChild(el);
   }
+})();
 
-  /* ===== HIDDEN AUDIO PLAYLIST =====
-     - 8 tracks diputar urut 1→8 lalu loop
-     - Playback speed: 0.5x
-     - Autoplay saat halaman dibuka
-     - Jika browser blokir autoplay, musik mulai saat user pertama kali klik/tap
-  */
-  const tracks = [
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part1.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part2.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part3.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part4.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part5.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part6.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part7.ogg',
-    'https://github.com/VaelHae/elaria-official/raw/refs/heads/main/69d4b466ca3c7fde94acc815_part8.ogg'
-  ];
+/* ════════════════════════════════════
+   AUDIO SYSTEM  — Crossfade Player
+   • raw.githubusercontent.com URLs (no redirect)
+   • Two audio elements for gapless crossfade
+   • Playback rate 0.5× (ambient slow)
+   • Volume 0.60
+   • Toggle button top-right
+════════════════════════════════════ */
+(function() {
+  const BASE = 'https://raw.githubusercontent.com/VaelHae/elaria-official/main/';
+  const TRACKS = [
+    '69d4b466ca3c7fde94acc815_part1.ogg',
+    '69d4b466ca3c7fde94acc815_part2.ogg',
+    '69d4b466ca3c7fde94acc815_part3.ogg',
+    '69d4b466ca3c7fde94acc815_part4.ogg',
+    '69d4b466ca3c7fde94acc815_part5.ogg',
+    '69d4b466ca3c7fde94acc815_part6.ogg',
+    '69d4b466ca3c7fde94acc815_part7.ogg',
+    '69d4b466ca3c7fde94acc815_part8.ogg'
+  ].map(t => BASE + t);
 
-  let currentTrack = 0;
-  const audio = document.getElementById('bgMusic');
+  const FADE_DURATION = 2.5; // seconds crossfade
+  const PLAYBACK_RATE = 0.5;
+  const TARGET_VOL    = 0.60;
+
+  const elA  = document.getElementById('audioA');
+  const elB  = document.getElementById('audioB');
+  const btn  = document.getElementById('audioBtn');
+  const iconPlay = document.getElementById('iconPlay');
+  const iconMute = document.getElementById('iconMute');
+
+  let active = elA;     // currently playing
+  let standby = elB;    // about to play (preloading)
+  let trackIdx = 0;
+  let muted = false;
   let started = false;
+  let fadeTimer = null;
 
-  function loadAndPlay(index) {
-    audio.src = tracks[index];
-    audio.playbackRate = 0.5;
-    audio.volume = 0.65;
-    audio.load();
-    audio.play().catch(() => {}); // silent catch, fallback handled below
+  function setRate(el) {
+    el.playbackRate = PLAYBACK_RATE;
+    el.preservesPitch = false; // keep half-speed natural tone (no pitch correction)
   }
 
-  // Lanjut ke track berikutnya saat lagu habis
-  audio.addEventListener('ended', () => {
-    currentTrack = (currentTrack + 1) % tracks.length;
-    loadAndPlay(currentTrack);
-  });
+  function fadeIn(el, duration) {
+    el.volume = 0;
+    const step = TARGET_VOL / (duration * 60);
+    const id = setInterval(() => {
+      if (el.volume + step >= TARGET_VOL) { el.volume = TARGET_VOL; clearInterval(id); }
+      else el.volume += step;
+    }, 1000 / 60);
+  }
 
-  // Pastikan playback rate 0.5x tetap terjaga setiap play
-  audio.addEventListener('play', () => {
-    audio.playbackRate = 0.5;
-  });
+  function fadeOut(el, duration, cb) {
+    const step = el.volume / (duration * 60);
+    const id = setInterval(() => {
+      if (el.volume - step <= 0) {
+        el.volume = 0; el.pause(); el.src = '';
+        clearInterval(id); if (cb) cb();
+      } else { el.volume -= step; }
+    }, 1000 / 60);
+  }
 
-  // Coba autoplay langsung
-  loadAndPlay(0);
+  function loadTrack(el, idx) {
+    el.src = TRACKS[idx];
+    el.load();
+    setRate(el);
+  }
 
-  // Fallback: kalau browser block autoplay, mulai saat interaksi pertama user
-  function handleFirstInteraction() {
+  function playNext() {
+    trackIdx = (trackIdx + 1) % TRACKS.length;
+    // Load next into standby, then crossfade
+    loadTrack(standby, trackIdx);
+    standby.volume = 0;
+    standby.play().then(() => {
+      setRate(standby);
+      fadeIn(standby, FADE_DURATION);
+      fadeOut(active, FADE_DURATION, () => {
+        // Swap roles
+        const tmp = active; active = standby; standby = tmp;
+      });
+    }).catch(() => {});
+  }
+
+  function startMusic() {
     if (started) return;
     started = true;
-    if (audio.paused) {
-      audio.play().then(() => {
-        audio.playbackRate = 0.5;
-      }).catch(() => {});
-    }
+    loadTrack(active, trackIdx);
+    active.volume = 0;
+    active.play().then(() => {
+      setRate(active);
+      fadeIn(active, 2);
+      // Pre-load next track 10s before end
+      active.addEventListener('timeupdate', function handler() {
+        const remaining = active.duration - active.currentTime;
+        if (!isNaN(remaining) && remaining < (FADE_DURATION + 1) && !fadeTimer) {
+          fadeTimer = setTimeout(() => {
+            fadeTimer = null;
+            playNext();
+          }, 0);
+        }
+      });
+    }).catch(() => {});
   }
 
-  document.addEventListener('click', handleFirstInteraction, { once: true });
-  document.addEventListener('keydown', handleFirstInteraction, { once: true });
-  document.addEventListener('touchstart', handleFirstInteraction, { once: true });
-  document.addEventListener('scroll', handleFirstInteraction, { once: true });
-</script>
+  // When a track naturally ends (safety net)
+  [elA, elB].forEach(el => {
+    el.addEventListener('ended', playNext);
+    el.addEventListener('play', () => setRate(el));
+  });
 
+  // Toggle button
+  btn.addEventListener('click', () => {
+    if (!started) { startMusic(); return; }
+    muted = !muted;
+    if (muted) {
+      [elA, elB].forEach(e => e.volume = 0);
+      btn.classList.add('muted');
+      iconPlay.style.display = 'none';
+      iconMute.style.display = '';
+    } else {
+      fadeIn(active, 1.5);
+      btn.classList.remove('muted');
+      iconPlay.style.display = '';
+      iconMute.style.display = 'none';
+    }
+  });
+
+  // Auto-start on first user interaction (browser policy)
+  const autoStart = () => { startMusic(); };
+  ['click','keydown','scroll','touchstart'].forEach(ev =>
+    document.addEventListener(ev, autoStart, { once: true, passive: true })
+  );
+
+  // Also try immediate autoplay
+  setTimeout(startMusic, 300);
+})();
+</script>
 </body>
 </html>
