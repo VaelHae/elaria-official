@@ -6,555 +6,434 @@
 <title>Mount Elaria – Journey of the Silent Peaks</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
-:root {
-  --gold:        #D4A017;
-  --gold-light:  #F5D060;
-  --gold-dark:   #8B6914;
-  --teal:        #00CED1;
-  --teal-glow:   #40E0D0;
-  --forest-dark: #060E06;
-  --forest-mid:  #0F2A10;
-  --parchment:   #F5E8C0;
-  --pink:        #DD44AA;
+:root{
+  --gold:#D4A017;
+  --gold-l:#F5D060;
+  --gold-d:#7A5200;
+  --teal:#00CED1;
+  --teal-g:#40E0D0;
+  --bg:#060E06;
+  --parch:#F5E8C0;
+  --pink:#DD44AA;
 }
 
-html { scroll-behavior: smooth; }
+html{scroll-behavior:smooth}
 
-body {
-  font-family: 'IM Fell English', Georgia, serif;
-  background: var(--forest-dark);
-  color: var(--parchment);
-  overflow-x: hidden;
+body{
+  font-family:'IM Fell English',Georgia,serif;
+  background:var(--bg);
+  color:var(--parch);
+  overflow-x:hidden;
 }
 
-/* ─── BACKGROUND ─── */
-.bg-fixed {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+/* ── BG ── */
+.bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
   background:
-    radial-gradient(ellipse 55% 45% at 15% 85%, rgba(0,140,90,0.10) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 55% at 85% 15%, rgba(0,180,160,0.07) 0%, transparent 65%),
-    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(10,60,10,0.25) 0%, transparent 70%),
-    linear-gradient(180deg, #050D05 0%, #080F08 40%, #0A1A0A 70%, #060E06 100%);
+    radial-gradient(ellipse 60% 50% at 10% 90%,rgba(0,130,80,.09) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 60% at 88% 12%,rgba(0,170,150,.06) 0%,transparent 65%),
+    linear-gradient(180deg,#050C05 0%,#081208 40%,#0A1A0A 70%,#050C05 100%);
 }
 
-/* Noise grain */
-.bg-fixed::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  opacity: 0.4; pointer-events: none;
+/* ── FIREFLIES ── */
+.ff{position:fixed;inset:0;z-index:1;pointer-events:none}
+.f{position:absolute;border-radius:50%;opacity:0;animation:ff linear infinite}
+@keyframes ff{
+  0%  {transform:translate(0,0) scale(0);opacity:0}
+  8%  {opacity:.9;transform:translate(6px,-15px) scale(1)}
+  55% {opacity:.4;transform:translate(-10px,-55px) scale(.75)}
+  100%{transform:translate(2px,-115px) scale(0);opacity:0}
 }
 
-/* ─── FIREFLIES ─── */
-.fireflies { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
-.firefly {
-  position: absolute; border-radius: 50%;
-  animation: firefly-drift linear infinite; opacity: 0;
+/* ── MUSIC BUTTON ── */
+#musicBtn{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  display:flex;align-items:center;gap:9px;
+  padding:9px 16px 9px 13px;
+  background:rgba(6,14,6,.9);
+  border:1px solid rgba(212,160,23,.3);
+  border-radius:24px;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:rgba(245,232,192,.65);
+  cursor:pointer;
+  backdrop-filter:blur(12px);
+  transition:border-color .3s,color .3s,box-shadow .3s;
+  user-select:none;
 }
-@keyframes firefly-drift {
-  0%   { transform: translate(0,0) scale(0);   opacity: 0; }
-  8%   { opacity: 1;  transform: translate(8px,-18px) scale(1); }
-  50%  { opacity: 0.45; transform: translate(-12px,-55px) scale(0.75); }
-  92%  { opacity: 0.7; transform: translate(4px,-100px) scale(0.9); }
-  100% { transform: translate(0,-130px) scale(0); opacity: 0; }
+#musicBtn:hover{border-color:var(--gold);color:var(--gold-l);box-shadow:0 0 20px rgba(212,160,23,.22)}
+#musicBtn .mico{width:16px;height:16px;fill:var(--gold);flex-shrink:0;transition:fill .2s}
+#musicBtn.off .mico{fill:rgba(245,232,192,.28)}
+#musicBtn.off{color:rgba(245,232,192,.28);border-color:rgba(245,232,192,.1)}
+.mdot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--teal);box-shadow:0 0 6px var(--teal-g);
+  animation:pulse-d 2s ease-in-out infinite;flex-shrink:0;
 }
+#musicBtn.off .mdot{background:rgba(245,232,192,.18);box-shadow:none;animation:none}
+@keyframes pulse-d{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.55);opacity:1}}
 
-/* ─── AUDIO TOGGLE ─── */
-#audioBtn {
-  position: fixed; bottom: 28px; right: 28px; z-index: 200;
-  width: 44px; height: 44px;
-  background: rgba(10,26,10,0.85);
-  border: 1px solid rgba(212,160,23,0.35);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
-  box-shadow: 0 0 16px rgba(0,0,0,0.5);
-  backdrop-filter: blur(8px);
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:15px 40px;
+  background:linear-gradient(180deg,rgba(4,8,4,.97) 0%,transparent 100%);
 }
-#audioBtn:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(212,160,23,0.3); transform: scale(1.08); }
-#audioBtn svg { width: 18px; height: 18px; fill: var(--gold-light); transition: fill 0.2s; }
-#audioBtn.muted svg { fill: rgba(245,232,192,0.3); }
+nav::after{
+  content:'';position:absolute;bottom:0;left:40px;right:40px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,160,23,.13),transparent);
+}
+.brand{
+  font-family:'Cinzel',serif;font-size:12px;font-weight:700;
+  letter-spacing:4px;color:var(--gold);text-transform:uppercase;
+  display:flex;align-items:center;gap:9px;
+}
+.bgem{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 7px var(--teal-g)}
+.links{display:flex;gap:30px;list-style:none}
+.links a{
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;
+  text-transform:uppercase;color:rgba(245,232,192,.44);text-decoration:none;
+  position:relative;padding-bottom:3px;transition:color .25s;
+}
+.links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold-l);transition:width .3s}
+.links a:hover{color:var(--gold-l)}
+.links a:hover::after{width:100%}
+.links .cta{
+  padding:6px 18px;border:1px solid rgba(212,160,23,.28);border-radius:2px;
+  color:var(--gold)!important;transition:background .25s,border-color .25s!important;
+}
+.links .cta::after{display:none!important}
+.links .cta:hover{background:rgba(212,160,23,.1);border-color:var(--gold)!important}
 
-/* Pulsing ring when playing */
-#audioBtn::before {
-  content: ''; position: absolute; inset: -4px; border-radius: 50%;
-  border: 1px solid rgba(212,160,23,0.2);
-  animation: ring-pulse 2.5s ease-in-out infinite;
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:10;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:110px 24px 80px;overflow:hidden;
 }
-@keyframes ring-pulse {
-  0%,100% { transform: scale(1); opacity: 0.4; }
-  50%      { transform: scale(1.2); opacity: 0; }
+.hero-img{
+  position:absolute;inset:0;
+  background:url('https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png') center 30%/cover;
+  opacity:.17;filter:saturate(1.7) brightness(.6);
 }
-#audioBtn.muted::before { display: none; }
-
-/* ─── NAV ─── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 40px;
-  background: linear-gradient(180deg, rgba(5,10,5,0.96) 0%, transparent 100%);
-}
-nav::after {
-  content: ''; position: absolute; bottom: 0; left: 40px; right: 40px; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,160,23,0.18), transparent);
-}
-.nav-brand {
-  font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700;
-  letter-spacing: 4px; color: var(--gold); text-transform: uppercase; opacity: 0.85;
-  display: flex; align-items: center; gap: 10px;
-}
-.nav-brand::before {
-  content: ''; width: 6px; height: 6px; background: var(--teal);
-  border-radius: 50%; box-shadow: 0 0 8px var(--teal-glow); flex-shrink: 0;
-}
-.nav-links { display: flex; gap: 32px; list-style: none; }
-.nav-links a {
-  font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 2.5px;
-  text-transform: uppercase; color: rgba(245,232,192,0.5); text-decoration: none;
-  transition: color 0.25s, opacity 0.25s; position: relative; padding-bottom: 2px;
-}
-.nav-links a::after {
-  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
-  background: var(--gold-light); transition: width 0.3s;
-}
-.nav-links a:hover { color: var(--gold-light); }
-.nav-links a:hover::after { width: 100%; }
-.nav-cta {
-  padding: 7px 20px;
-  background: rgba(212,160,23,0.08);
-  border: 1px solid rgba(212,160,23,0.35) !important;
-  border-radius: 1px; color: var(--gold) !important;
-  transition: background 0.25s, border-color 0.25s !important;
-}
-.nav-cta::after { display: none !important; }
-.nav-cta:hover { background: rgba(212,160,23,0.16) !important; border-color: var(--gold) !important; }
-
-/* ─── HERO ─── */
-.hero {
-  position: relative; z-index: 10; min-height: 100vh;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 120px 24px 80px; overflow: hidden;
-}
-.hero-bg {
-  position: absolute; inset: 0;
-  background-image: url('https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png');
-  background-size: cover; background-position: center 30%;
-  opacity: 0.18; filter: saturate(1.6) brightness(0.6);
-  transform: scale(1.05);
-}
-.hero-vignette {
-  position: absolute; inset: 0;
+.hero-fade{
+  position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 65% 55% at 50% 55%, transparent 0%, rgba(6,14,6,0.65) 75%),
-    linear-gradient(180deg, rgba(5,10,5,0.55) 0%, transparent 25%, transparent 55%, rgba(5,10,5,0.95) 100%);
+    radial-gradient(ellipse 68% 58% at 50% 52%,transparent 0%,rgba(5,11,5,.6) 72%),
+    linear-gradient(180deg,rgba(4,8,4,.55) 0%,transparent 22%,transparent 55%,rgba(4,8,4,.97) 100%);
+}
+.h-rule{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,.16),transparent)}
+.h-rule.top{top:86px}.h-rule.bot{bottom:76px}
+
+.badge{
+  position:relative;z-index:2;
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:6px;
+  text-transform:uppercase;color:var(--gold);opacity:.58;
+  margin-bottom:26px;animation:up 1s ease-out both;
+}
+.bdot{width:4px;height:4px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal-g)}
+
+.logo{position:relative;z-index:2;animation:logo-in 1.2s .1s ease-out both}
+@keyframes logo-in{from{opacity:0;transform:translateY(22px) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.logo img{
+  max-width:490px;width:86vw;
+  filter:drop-shadow(0 0 32px rgba(212,160,23,.45)) drop-shadow(0 0 65px rgba(0,200,200,.16));
+  animation:logo-b 5s 1.4s ease-in-out infinite;
+}
+@keyframes logo-b{
+  0%,100%{filter:drop-shadow(0 0 32px rgba(212,160,23,.45)) drop-shadow(0 0 65px rgba(0,200,200,.16))}
+  50%{filter:drop-shadow(0 0 52px rgba(212,160,23,.72)) drop-shadow(0 0 88px rgba(0,220,210,.28))}
 }
 
-/* Horizontal rule lines decorating hero */
-.hero-rule-top, .hero-rule-bottom {
-  position: absolute; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(212,160,23,0.25) 30%, rgba(212,160,23,0.25) 70%, transparent 100%);
+.tagline{
+  position:relative;z-index:2;
+  font-family:'IM Fell English',serif;font-style:italic;
+  font-size:15px;letter-spacing:2px;color:rgba(245,232,192,.44);
+  margin-top:8px;margin-bottom:42px;animation:up 1s .5s ease-out both;
 }
-.hero-rule-top { top: 90px; }
-.hero-rule-bottom { bottom: 80px; }
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-.badge {
-  position: relative; z-index: 2;
-  display: inline-flex; align-items: center; gap: 12px;
-  font-family: 'Cinzel', serif; font-size: 10px;
-  letter-spacing: 6px; text-transform: uppercase;
-  color: var(--gold); opacity: 0.65;
-  margin-bottom: 28px;
-  animation: appear 1s ease-out both;
-}
-.badge-dot {
-  width: 4px; height: 4px; background: var(--teal); border-radius: 50%;
-  box-shadow: 0 0 6px var(--teal); flex-shrink: 0;
-}
+.ctas{position:relative;z-index:2;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:up 1s .75s ease-out both}
 
-.hero-logo {
-  position: relative; z-index: 2;
-  margin-bottom: 0;
-  animation: logo-in 1.2s 0.1s ease-out both;
+.btn-gold{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 34px;
+  background:linear-gradient(130deg,#7A5200,#C8940E,#EEC635,#C8940E);
+  background-size:250%;
+  border:none;border-radius:2px;
+  font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:#120A00;text-decoration:none;
+  box-shadow:0 0 18px rgba(212,160,23,.22),inset 0 1px 0 rgba(255,255,255,.14);
+  animation:shim 3.5s 2s linear infinite;
+  transition:transform .2s,box-shadow .3s;
+  position:relative;overflow:hidden;
 }
-@keyframes logo-in {
-  from { opacity: 0; transform: translateY(24px) scale(0.96); filter: blur(6px); }
-  to   { opacity: 1; transform: none; filter: none; }
+@keyframes shim{0%{background-position:0%}100%{background-position:250%}}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 5px 26px rgba(212,160,23,.5)}
+.btn-gold::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
+  transform:translateX(-100%);transition:transform .5s;
 }
-.hero-logo img {
-  max-width: 500px; width: 88vw;
-  filter:
-    drop-shadow(0 0 35px rgba(212,160,23,0.45))
-    drop-shadow(0 0 70px rgba(0,200,200,0.18));
-  animation: logo-breathe 5s 1.5s ease-in-out infinite;
-}
-@keyframes logo-breathe {
-  0%,100% { filter: drop-shadow(0 0 35px rgba(212,160,23,0.45)) drop-shadow(0 0 70px rgba(0,200,200,0.18)); }
-  50%      { filter: drop-shadow(0 0 55px rgba(212,160,23,0.75)) drop-shadow(0 0 90px rgba(0,220,210,0.30)); }
-}
+.btn-gold:hover::after{transform:translateX(100%)}
 
-.hero-sub {
-  position: relative; z-index: 2;
-  font-family: 'IM Fell English', serif; font-style: italic;
-  font-size: 15px; letter-spacing: 2px;
-  color: rgba(245,232,192,0.5);
-  margin-top: 10px; margin-bottom: 44px;
-  animation: appear 1s 0.5s ease-out both;
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 26px;background:transparent;
+  border:1px solid rgba(245,232,192,.14);border-radius:2px;
+  font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:2.5px;
+  text-transform:uppercase;color:rgba(245,232,192,.48);text-decoration:none;
+  transition:border-color .3s,color .3s,background .3s;
 }
-@keyframes appear {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: none; }
-}
+.btn-ghost:hover{border-color:rgba(245,232,192,.36);color:var(--parch);background:rgba(245,232,192,.04)}
 
-.hero-actions { position: relative; z-index: 2; display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; animation: appear 1s 0.75s ease-out both; }
-
-.btn-primary {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 13px 36px;
-  background: linear-gradient(135deg, #7A5800, #C8950F, #F0C840, #C8950F);
-  background-size: 250% 100%;
-  border: none; border-radius: 2px;
-  font-family: 'Cinzel', serif; font-size: 12px; font-weight: 700; letter-spacing: 3px;
-  text-transform: uppercase; color: #150900; text-decoration: none;
-  box-shadow: 0 0 20px rgba(212,160,23,0.25), inset 0 1px 0 rgba(255,255,255,0.15);
-  transition: transform 0.2s, box-shadow 0.3s;
-  animation: shimmer 3s 2s linear infinite;
-  position: relative; overflow: hidden;
+.s-hint{
+  position:absolute;bottom:30px;
+  left:0;right:0;margin:0 auto;
+  width:fit-content;
+  z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:7px;
+  animation:shint 1s 2s ease-out both;
 }
-@keyframes shimmer {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 250% 50%; }
+@keyframes shint{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.s-hint span{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--gold);opacity:.4;
+  white-space:nowrap;
 }
-.btn-primary::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.18) 50%, transparent 100%);
-  transform: translateX(-100%); transition: transform 0.5s;
+.needle-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
+.needle-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.35;margin-bottom:3px}
+.needle{
+  width:1px;height:36px;
+  background:linear-gradient(to bottom,rgba(212,160,23,.45),transparent);
+  animation:nd 1.7s ease-in-out infinite;
 }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(212,160,23,0.5); }
-.btn-primary:hover::after { transform: translateX(100%); }
-
-.btn-secondary {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 13px 28px;
-  background: transparent;
-  border: 1px solid rgba(245,232,192,0.18); border-radius: 2px;
-  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 2.5px;
-  text-transform: uppercase; color: rgba(245,232,192,0.55); text-decoration: none;
-  transition: border-color 0.3s, color 0.3s, background 0.3s;
-}
-.btn-secondary:hover { border-color: rgba(245,232,192,0.45); color: var(--parchment); background: rgba(245,232,192,0.04); }
-
-.scroll-hint {
-  position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10;
-  display: flex; flex-direction: column; align-items: center; gap: 7px; opacity: 0.35;
-  animation: appear 1s 1.8s ease-out both;
-}
-.scroll-hint span { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); }
-.scroll-needle { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--gold), transparent); animation: needle-drop 1.6s ease-in-out infinite; }
-@keyframes needle-drop {
-  0%   { transform-origin: top; transform: scaleY(0); opacity: 1; }
-  60%  { transform: scaleY(1); opacity: 1; }
-  100% { transform: scaleY(1); opacity: 0; }
+@keyframes nd{
+  0%  {transform-origin:top;transform:scaleY(0);opacity:0}
+  15% {opacity:1}
+  65% {transform:scaleY(1);opacity:.8}
+  100%{transform:scaleY(1);opacity:0}
 }
 
-/* ─── DIVIDER ─── */
-.divider {
-  position: relative; z-index: 10;
-  display: flex; align-items: center; justify-content: center;
-  padding: 0 40px; max-width: 600px; margin: 0 auto; gap: 14px;
+/* ── DIVIDER ── */
+.divider{
+  position:relative;z-index:10;
+  display:flex;align-items:center;justify-content:center;
+  padding:0 40px;max-width:560px;margin:0 auto;gap:14px;
 }
-.div-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,160,23,0.3), transparent); }
-.div-gem {
-  width: 7px; height: 7px; transform: rotate(45deg); flex-shrink: 0;
+.dline{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,.26),transparent)}
+.dgem{width:7px;height:7px;transform:rotate(45deg);flex-shrink:0}
+.dgem.t{background:var(--teal);box-shadow:0 0 7px var(--teal-g)}
+.dgem.p{background:var(--pink);box-shadow:0 0 7px var(--pink)}
+
+/* ── SECTION ── */
+.sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:80px 40px}
+
+.lbl{
+  font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:5px;
+  text-transform:uppercase;color:var(--teal);opacity:.7;
+  margin-bottom:10px;display:flex;align-items:center;gap:10px;
 }
-.div-gem.teal  { background: var(--teal);  box-shadow: 0 0 8px var(--teal-glow); }
-.div-gem.pink  { background: var(--pink);  box-shadow: 0 0 8px var(--pink); }
-.div-gem.gold  { background: var(--gold-light); box-shadow: 0 0 8px var(--gold); }
+.lbl::before{content:'';width:20px;height:1px;background:var(--teal);opacity:.5}
 
-/* ─── SECTIONS ─── */
-.section { position: relative; z-index: 10; max-width: 1080px; margin: 0 auto; padding: 80px 40px; }
-
-.label {
-  font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 5.5px;
-  text-transform: uppercase; color: var(--teal); opacity: 0.75; margin-bottom: 10px;
-  display: flex; align-items: center; gap: 10px;
-}
-.label::before { content: ''; width: 24px; height: 1px; background: var(--teal); opacity: 0.6; }
-
-.title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(20px, 3.5vw, 34px);
-  color: var(--gold-light);
-  text-shadow: 0 0 28px rgba(212,160,23,0.35);
-  line-height: 1.25; margin-bottom: 18px;
+.ttl{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(19px,3.2vw,32px);
+  color:var(--gold-l);text-shadow:0 0 26px rgba(212,160,23,.3);
+  line-height:1.25;margin-bottom:18px;
 }
 
-.body-text {
-  font-family: 'IM Fell English', serif; font-size: 15.5px; line-height: 1.9;
-  color: rgba(245,232,192,0.65); max-width: 640px;
+.body{
+  font-family:'IM Fell English',serif;font-size:15.5px;line-height:1.9;
+  color:rgba(245,232,192,.6);max-width:620px;
 }
-.body-text strong { color: var(--gold); font-style: normal; font-weight: 600; }
+.body strong{color:var(--gold);font-style:normal}
 
-/* ─── ABOUT GRID ─── */
-.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-
-.about-img-wrap {
-  position: relative; border-radius: 3px; overflow: hidden;
-  border: 1px solid rgba(212,160,23,0.15);
-  box-shadow: 0 0 50px rgba(0,150,120,0.10), 0 20px 60px rgba(0,0,0,0.5);
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:center}
+.about-img{
+  position:relative;border-radius:3px;overflow:hidden;
+  border:1px solid rgba(212,160,23,.13);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(0,150,120,.08);
 }
-.about-img-wrap img { width: 100%; display: block; filter: brightness(0.82) saturate(1.25); transition: filter 0.5s, transform 0.6s ease; }
-.about-img-wrap:hover img { filter: brightness(0.95) saturate(1.45); transform: scale(1.04); }
-/* Teal corner accent */
-.about-img-wrap::before, .about-img-wrap::after {
-  content: ''; position: absolute; z-index: 2; pointer-events: none;
-}
-.about-img-wrap::before {
-  inset: 0; background: linear-gradient(135deg, rgba(0,206,209,0.07) 0%, transparent 50%);
-}
-.about-img-wrap::after {
-  top: 0; right: 0; width: 40px; height: 40px;
-  border-top: 1px solid rgba(212,160,23,0.4); border-right: 1px solid rgba(212,160,23,0.4);
+.about-img img{width:100%;display:block;filter:brightness(.82) saturate(1.2);transition:filter .5s,transform .6s ease}
+.about-img:hover img{filter:brightness(.96) saturate(1.42);transform:scale(1.04)}
+.about-img::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,206,209,.06) 0%,transparent 55%);pointer-events:none}
+.about-img::after{
+  content:'';position:absolute;top:10px;right:10px;z-index:2;
+  width:22px;height:22px;pointer-events:none;
+  border-top:1px solid rgba(212,160,23,.38);border-right:1px solid rgba(212,160,23,.38);
 }
 
-/* ─── STATS ─── */
-.stats-band {
-  position: relative; z-index: 10;
-  padding: 40px 40px;
-  background: linear-gradient(90deg, transparent, rgba(15,42,15,0.55), transparent);
-  border-top: 1px solid rgba(212,160,23,0.08);
-  border-bottom: 1px solid rgba(212,160,23,0.08);
+/* ── STATS ── */
+.stats{
+  position:relative;z-index:10;padding:38px 40px;
+  background:linear-gradient(90deg,transparent,rgba(13,35,13,.5),transparent);
+  border-top:1px solid rgba(212,160,23,.07);border-bottom:1px solid rgba(212,160,23,.07);
 }
-.stats-inner { display: flex; justify-content: center; gap: 72px; flex-wrap: wrap; max-width: 640px; margin: 0 auto; }
-.stat { text-align: center; }
-.stat-num {
-  font-family: 'Cinzel Decorative', serif; font-size: 30px;
-  color: var(--gold-light); text-shadow: 0 0 20px rgba(212,160,23,0.45);
-  display: block; line-height: 1; margin-bottom: 8px;
-}
-.stat-num.teal { color: var(--teal); text-shadow: 0 0 20px var(--teal-glow); }
-.stat-label { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(245,232,192,0.35); }
+.stats-row{display:flex;justify-content:center;gap:72px;flex-wrap:wrap;max-width:580px;margin:0 auto}
+.stat{text-align:center}
+.sn{font-family:'Cinzel Decorative',serif;font-size:29px;color:var(--gold-l);text-shadow:0 0 18px rgba(212,160,23,.4);display:block;line-height:1;margin-bottom:8px}
+.sn.t{color:var(--teal);text-shadow:0 0 18px var(--teal-g)}
+.sl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(245,232,192,.3)}
 
-/* ─── MAP SECTION ─── */
-.map-section { position: relative; z-index: 10; max-width: 1080px; margin: 0 auto; padding: 60px 40px 80px; }
+/* ── MAP ── */
+.map-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
+.map-card{
+  position:relative;margin-top:34px;border-radius:3px;overflow:hidden;
+  border:1px solid rgba(212,160,23,.15);
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  transition:box-shadow .4s;
+}
+.map-card:hover{box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 50px rgba(0,150,100,.1)}
+.map-card img{width:100%;height:370px;object-fit:cover;object-position:center 38%;filter:saturate(1.3) brightness(.62);display:block;transition:filter .5s,transform .6s ease}
+.map-card:hover img{filter:saturate(1.52) brightness(.78);transform:scale(1.03)}
+.map-over{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
+  padding:34px 38px;
+  background:linear-gradient(to top,rgba(4,8,4,.93) 0%,rgba(4,8,4,.22) 52%,transparent 100%);
+}
+.map-big{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.8vw,36px);color:var(--gold-l);text-shadow:0 0 22px rgba(212,160,23,.52);line-height:1.1;margin-bottom:5px}
+.map-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:13.5px;color:rgba(245,232,192,.4);margin-bottom:20px}
+.map-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 24px;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);
+  border:1px solid rgba(212,160,23,.4);border-radius:2px;
+  font-family:'Cinzel',serif;font-size:9.5px;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold-l);text-decoration:none;
+  transition:background .3s,border-color .3s,box-shadow .3s;
+}
+.map-btn:hover{background:rgba(212,160,23,.1);border-color:var(--gold);box-shadow:0 0 18px rgba(212,160,23,.2)}
+.map-btn svg{width:11px;height:11px;fill:var(--gold-l)}
 
-.map-card {
-  position: relative; margin-top: 36px; border-radius: 3px; overflow: hidden;
-  border: 1px solid rgba(212,160,23,0.18);
-  box-shadow: 0 0 80px rgba(0,150,100,0.07), 0 30px 80px rgba(0,0,0,0.5);
-  transition: box-shadow 0.4s;
+/* ── FEATURES ── */
+.feat-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:15px;margin-top:42px}
+.fc{
+  position:relative;overflow:hidden;padding:25px 21px;
+  background:linear-gradient(150deg,rgba(14,36,14,.65),rgba(5,11,5,.88));
+  border:1px solid rgba(212,160,23,.09);border-radius:3px;
+  transition:border-color .3s,transform .3s,box-shadow .3s;cursor:default;
 }
-.map-card:hover { box-shadow: 0 0 80px rgba(0,150,100,0.14), 0 30px 80px rgba(0,0,0,0.6); }
-.map-card img {
-  width: 100%; height: 380px; object-fit: cover; object-position: center 38%;
-  filter: saturate(1.35) brightness(0.65); display: block; transition: filter 0.5s, transform 0.6s ease;
-}
-.map-card:hover img { filter: saturate(1.55) brightness(0.8); transform: scale(1.03); }
-.map-overlay {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
-  padding: 36px 40px;
-  background: linear-gradient(to top, rgba(5,10,5,0.92) 0%, rgba(5,10,5,0.3) 50%, transparent 100%);
-}
-.map-title-big {
-  font-family: 'Cinzel Decorative', serif; font-size: clamp(22px, 4vw, 38px);
-  color: var(--gold-light); text-shadow: 0 0 24px rgba(212,160,23,0.55);
-  line-height: 1.1; margin-bottom: 6px;
-}
-.map-tag {
-  font-family: 'IM Fell English', serif; font-style: italic; font-size: 14px;
-  color: rgba(245,232,192,0.45); margin-bottom: 22px;
-}
-.map-btn {
-  display: inline-flex; align-items: center; gap: 9px;
-  padding: 10px 26px;
-  background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
-  border: 1px solid rgba(212,160,23,0.45); border-radius: 1px;
-  font-family: 'Cinzel', serif; font-size: 10px; font-weight: 700; letter-spacing: 3px;
-  text-transform: uppercase; color: var(--gold-light); text-decoration: none;
-  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-.map-btn:hover { background: rgba(212,160,23,0.12); border-color: var(--gold); box-shadow: 0 0 20px rgba(212,160,23,0.25); }
-.map-btn svg { width: 12px; height: 12px; fill: var(--gold-light); }
+.fc:hover{border-color:rgba(212,160,23,.25);transform:translateY(-5px);box-shadow:0 14px 38px rgba(0,0,0,.42)}
+.fc::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:linear-gradient(to bottom,var(--gold),var(--teal));transition:height .4s ease}
+.fc:hover::before{height:100%}
+.fi{font-size:25px;margin-bottom:12px;display:block;filter:drop-shadow(0 0 5px rgba(212,160,23,.28))}
+.ft{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:1.8px;color:var(--gold-l);margin-bottom:8px;text-transform:uppercase}
+.fd{font-family:'IM Fell English',serif;font-size:13px;line-height:1.7;color:rgba(245,232,192,.42);font-style:italic}
 
-/* ─── FEATURES ─── */
-.features-section { position: relative; z-index: 10; max-width: 1080px; margin: 0 auto; padding: 60px 40px 80px; }
-.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 44px; }
+/* ── FOOTER ── */
+footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;border-top:1px solid rgba(212,160,23,.07)}
+.f-brand{font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--gold);text-shadow:0 0 16px rgba(212,160,23,.3);margin-bottom:5px}
+.f-sub{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(245,232,192,.18);margin-bottom:24px}
+.f-nav{display:flex;justify-content:center;gap:22px;list-style:none;margin-bottom:28px}
+.f-nav a{font-family:'Cinzel',serif;font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(245,232,192,.22);text-decoration:none;transition:color .3s}
+.f-nav a:hover{color:var(--gold-l)}
+.f-copy{font-family:'IM Fell English',serif;font-size:12px;color:rgba(245,232,192,.14);font-style:italic}
 
-.feature-card {
-  position: relative; overflow: hidden; padding: 26px 22px;
-  background: linear-gradient(155deg, rgba(15,42,15,0.65), rgba(6,14,6,0.85));
-  border: 1px solid rgba(212,160,23,0.10); border-radius: 3px;
-  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
-  cursor: default;
-}
-.feature-card:hover {
-  border-color: rgba(212,160,23,0.28); transform: translateY(-5px);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 18px rgba(212,160,23,0.06);
-}
-.feature-card::before {
-  content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 0;
-  background: linear-gradient(to bottom, var(--gold), var(--teal));
-  transition: height 0.4s ease;
-}
-.feature-card:hover::before { height: 100%; }
-.feature-card::after {
-  content: ''; position: absolute; bottom: 0; right: 0; width: 0; height: 2px;
-  background: linear-gradient(to left, transparent, rgba(212,160,23,0.2));
-  transition: width 0.4s 0.1s ease;
-}
-.feature-card:hover::after { width: 100%; }
-
-.feat-icon { font-size: 26px; margin-bottom: 13px; display: block; filter: drop-shadow(0 0 5px rgba(212,160,23,0.35)); }
-.feat-title {
-  font-family: 'Cinzel', serif; font-size: 11.5px; font-weight: 700;
-  letter-spacing: 1.8px; color: var(--gold-light); margin-bottom: 9px; text-transform: uppercase;
-}
-.feat-desc {
-  font-family: 'IM Fell English', serif; font-size: 13.5px; line-height: 1.7;
-  color: rgba(245,232,192,0.48); font-style: italic;
-}
-
-/* ─── FOOTER ─── */
-footer {
-  position: relative; z-index: 10;
-  padding: 52px 40px 40px; text-align: center;
-  border-top: 1px solid rgba(212,160,23,0.08);
-}
-.footer-brand { font-family: 'Cinzel Decorative', serif; font-size: 17px; color: var(--gold); text-shadow: 0 0 18px rgba(212,160,23,0.35); margin-bottom: 6px; }
-.footer-tagline { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(245,232,192,0.22); margin-bottom: 26px; }
-.footer-nav { display: flex; justify-content: center; gap: 24px; list-style: none; margin-bottom: 32px; }
-.footer-nav a { font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(245,232,192,0.28); text-decoration: none; transition: color 0.3s; }
-.footer-nav a:hover { color: var(--gold-light); }
-.footer-copy { font-family: 'IM Fell English', serif; font-size: 12px; color: rgba(245,232,192,0.16); font-style: italic; }
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 720px) {
-  .nav-links { display: none; }
-  .about-grid { grid-template-columns: 1fr; gap: 36px; }
-  .stats-inner { gap: 40px; }
-  .section, .map-section, .features-section { padding-left: 20px; padding-right: 20px; }
-  #audioBtn { bottom: 20px; right: 20px; }
+@media(max-width:700px){
+  .links{display:none}
+  .about-grid{grid-template-columns:1fr;gap:32px}
+  .stats-row{gap:38px}
+  .sec,.map-sec,.feat-sec{padding-left:20px;padding-right:20px}
+  #musicBtn{bottom:16px;right:16px}
 }
 </style>
 </head>
 <body>
 
-<div class="bg-fixed"></div>
-<div class="fireflies" id="fireflies"></div>
+<div class="bg"></div>
+<div class="ff" id="ff"></div>
 
-<!-- ─── AUDIO ─── -->
-<!-- We use TWO audio elements for seamless crossfade between tracks -->
-<audio id="audioA" preload="auto" style="display:none;"></audio>
-<audio id="audioB" preload="auto" style="display:none;"></audio>
+<!-- single audio element -->
+<audio id="snd" preload="none" style="display:none"></audio>
 
-<!-- ─── AUDIO TOGGLE ─── -->
-<button id="audioBtn" title="Toggle music" aria-label="Toggle background music">
-  <!-- Speaker icon (playing) -->
-  <svg id="iconPlay" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-  <!-- Muted icon -->
-  <svg id="iconMute" viewBox="0 0 24 24" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+<!-- MUSIC BUTTON -->
+<button id="musicBtn" title="Play background music">
+  <svg class="mico" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+  <div class="mdot"></div>
+  <span id="btnTxt">Music</span>
 </button>
 
-<!-- ─── NAV ─── -->
+<!-- NAV -->
 <nav>
-  <div class="nav-brand">Elaria Official</div>
-  <ul class="nav-links">
+  <div class="brand"><div class="bgem"></div>Elaria Official</div>
+  <ul class="links">
     <li><a href="#about">About</a></li>
     <li><a href="#maps">Maps</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="nav-cta">Play Now</a></li>
+    <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="cta">Play Now</a></li>
   </ul>
 </nav>
 
-<!-- ─── HERO ─── -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-vignette"></div>
-  <div class="hero-rule-top"></div>
-  <div class="hero-rule-bottom"></div>
-
-  <div class="badge">
-    <div class="badge-dot"></div>
-    Elaria Official
-    <div class="badge-dot"></div>
-  </div>
-
-  <div class="hero-logo">
+  <div class="hero-img"></div>
+  <div class="hero-fade"></div>
+  <div class="h-rule top"></div>
+  <div class="h-rule bot"></div>
+  <div class="badge"><div class="bdot"></div>Elaria Official<div class="bdot"></div></div>
+  <div class="logo">
     <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Mount Elaria">
   </div>
-  <p class="hero-sub">Journey of the Silent Peaks</p>
-
-  <div class="hero-actions">
-    <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="btn-primary">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+  <p class="tagline">Journey of the Silent Peaks</p>
+  <div class="ctas">
+    <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="btn-gold">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
       Play on Roblox
     </a>
-    <a href="#about" class="btn-secondary">Explore World</a>
+    <a href="#about" class="btn-ghost">Explore World</a>
   </div>
-
-  <div class="scroll-hint">
+  <div class="s-hint">
     <span>Scroll</span>
-    <div class="scroll-needle"></div>
+    <div class="needle-wrap">
+      <div class="needle-dot"></div>
+      <div class="needle"></div>
+    </div>
   </div>
 </section>
 
-<!-- ─── DIVIDER ─── -->
-<div class="divider" style="margin-top:0; margin-bottom:0;">
-  <div class="div-line"></div>
-  <div class="div-gem teal"></div>
-  <div class="div-line"></div>
-</div>
+<div class="divider"><div class="dline"></div><div class="dgem t"></div><div class="dline"></div></div>
 
-<!-- ─── ABOUT ─── -->
-<section class="section" id="about">
+<!-- ABOUT -->
+<section class="sec" id="about">
   <div class="about-grid">
     <div>
-      <p class="label">The World</p>
-      <h2 class="title">A Realm Forged in<br>Ancient Magic</h2>
-      <p class="body-text">
-        Mount Elaria is a mystical open world nestled between glowing crystal caves, enchanted autumn forests, and ancient Celtic ruins humming with forgotten power. Every path leads to discovery — where mushrooms glow in the dark and sacred stones guard the secrets of a lost civilization.
-      </p>
+      <p class="lbl">The World</p>
+      <h2 class="ttl">A Realm Forged in<br>Ancient Magic</h2>
+      <p class="body">Mount Elaria is a mystical open world nestled between glowing crystal caves, enchanted autumn forests, and ancient Celtic ruins humming with forgotten power. Every path leads to discovery — where mushrooms glow in the dark and sacred stones guard the secrets of a lost civilization.</p>
       <br>
-      <p class="body-text">
-        Created by <strong>Elaria Official</strong>, this Roblox experience brings a handcrafted fantasy world to life, inviting adventurers to explore, survive, and uncover the lore of the silent peaks.
-      </p>
+      <p class="body">Created by <strong>Elaria Official</strong>, this Roblox experience brings a handcrafted fantasy world to life, inviting adventurers to explore, survive, and uncover the lore of the silent peaks.</p>
     </div>
-    <div class="about-img-wrap">
+    <div class="about-img">
       <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Mount Elaria world">
     </div>
   </div>
 </section>
 
-<!-- ─── STATS ─── -->
-<div class="stats-band">
-  <div class="stats-inner">
-    <div class="stat">
-      <span class="stat-num">∞</span>
-      <span class="stat-label">Adventures Await</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num teal">1</span>
-      <span class="stat-label">Active Map</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">⚔</span>
-      <span class="stat-label">Legendary Quests</span>
-    </div>
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-row">
+    <div class="stat"><span class="sn">&#8734;</span><span class="sl">Adventures Await</span></div>
+    <div class="stat"><span class="sn t">1</span><span class="sl">Active Map</span></div>
+    <div class="stat"><span class="sn">&#9876;</span><span class="sl">Legendary Quests</span></div>
   </div>
 </div>
 
-<!-- ─── MAP ─── -->
-<section class="map-section" id="maps">
-  <p class="label">Hub Map</p>
-  <h2 class="title">Mount Elaria</h2>
-  <p class="body-text">Our flagship world — a living, breathing landscape of magic, mystery, and wonder.</p>
+<!-- MAP -->
+<section class="map-sec" id="maps">
+  <p class="lbl">Hub Map</p>
+  <h2 class="ttl">Mount Elaria</h2>
+  <p class="body">Our flagship world — a living, breathing landscape of magic, mystery, and wonder.</p>
   <div class="map-card">
     <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png" alt="Mount Elaria">
-    <div class="map-overlay">
-      <div class="map-title-big">Mount Elaria</div>
-      <div class="map-tag">Journey of the Silent Peaks</div>
+    <div class="map-over">
+      <div class="map-big">Mount Elaria</div>
+      <div class="map-sub">Journey of the Silent Peaks</div>
       <a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="map-btn">
         <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
         Enter World
@@ -563,99 +442,64 @@ footer {
   </div>
 </section>
 
-<!-- ─── FEATURES ─── -->
-<section class="features-section" id="features">
-  <p class="label">What Awaits</p>
-  <h2 class="title">The Wonders of Elaria</h2>
-  <div class="features-grid">
-    <div class="feature-card">
-      <span class="feat-icon">🔮</span>
-      <div class="feat-title">Crystal Caverns</div>
-      <p class="feat-desc">Descend into glowing blue and pink crystal formations deep beneath the mountain.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feat-icon">🍄</span>
-      <div class="feat-title">Enchanted Groves</div>
-      <p class="feat-desc">Wander through forests lit by glowing mushrooms and ancient trees twisted by magic.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feat-icon">⚗️</span>
-      <div class="feat-title">Ancient Ruins</div>
-      <p class="feat-desc">Discover Celtic standing stones engraved with forgotten runes and hidden lore scrolls.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feat-icon">🌿</span>
-      <div class="feat-title">Living World</div>
-      <p class="feat-desc">A handcrafted open world that breathes with ambience, secrets, and exploration paths.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feat-icon">⚔️</span>
-      <div class="feat-title">Legendary Weapons</div>
-      <p class="feat-desc">Find swords buried in stone amidst wildflower fields, waiting for their worthy champion.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feat-icon">✨</span>
-      <div class="feat-title">Magic & Lore</div>
-      <p class="feat-desc">Uncover the story of Mount Elaria — a realm where magic is not cast, but awakened.</p>
-    </div>
+<!-- FEATURES -->
+<section class="feat-sec" id="features">
+  <p class="lbl">What Awaits</p>
+  <h2 class="ttl">The Wonders of Elaria</h2>
+  <div class="feat-grid">
+    <div class="fc"><span class="fi">&#128302;</span><div class="ft">Crystal Caverns</div><p class="fd">Descend into glowing blue and pink crystal formations deep beneath the mountain.</p></div>
+    <div class="fc"><span class="fi">&#127812;</span><div class="ft">Enchanted Groves</div><p class="fd">Wander through forests lit by glowing mushrooms and ancient trees twisted by magic.</p></div>
+    <div class="fc"><span class="fi">&#9879;&#65039;</span><div class="ft">Ancient Ruins</div><p class="fd">Discover Celtic standing stones engraved with forgotten runes and hidden lore scrolls.</p></div>
+    <div class="fc"><span class="fi">&#127807;</span><div class="ft">Living World</div><p class="fd">A handcrafted open world that breathes with ambience, secrets, and exploration paths.</p></div>
+    <div class="fc"><span class="fi">&#9876;&#65039;</span><div class="ft">Legendary Weapons</div><p class="fd">Find swords buried in stone amidst wildflower fields, waiting for their worthy champion.</p></div>
+    <div class="fc"><span class="fi">&#10024;</span><div class="ft">Magic &amp; Lore</div><p class="fd">Uncover the story of Mount Elaria — a realm where magic is not cast, but awakened.</p></div>
   </div>
 </section>
 
-<!-- ─── DIVIDER ─── -->
-<div class="divider">
-  <div class="div-line"></div>
-  <div class="div-gem pink"></div>
-  <div class="div-line"></div>
-</div>
+<div class="divider" style="margin-bottom:8px"><div class="dline"></div><div class="dgem p"></div><div class="dline"></div></div>
 
-<!-- ─── FOOTER ─── -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-brand">Elaria Official</div>
-  <div class="footer-tagline">Roblox Game Publisher</div>
-  <ul class="footer-nav">
+  <div class="f-brand">Elaria Official</div>
+  <div class="f-sub">Roblox Game Publisher</div>
+  <ul class="f-nav">
     <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank">Play Now</a></li>
     <li><a href="#">Community</a></li>
     <li><a href="#">Updates</a></li>
   </ul>
-  <p class="footer-copy">© 2026 Elaria Official — All rights reserved. Mount Elaria is a Roblox experience.</p>
+  <p class="f-copy">&#169; 2026 Elaria Official &#8212; All rights reserved. Mount Elaria is a Roblox experience.</p>
 </footer>
 
 <script>
-/* ════════════════════════════════════
-   FIREFLIES
-════════════════════════════════════ */
-(function() {
-  const container = document.getElementById('fireflies');
-  const colors = ['#F5D060', '#40E0D0', '#F5D060', '#F5D060', '#DD88FF'];
-  for (let i = 0; i < 30; i++) {
-    const el = document.createElement('div');
-    el.className = 'firefly';
-    const c = colors[Math.floor(Math.random() * colors.length)];
-    const size = 2 + Math.random() * 2;
-    el.style.cssText = `
-      left:${Math.random()*100}%;
-      top:${15+Math.random()*72}%;
-      width:${size}px; height:${size}px;
-      background:${c};
-      box-shadow:0 0 ${4+Math.random()*4}px 2px ${c};
-      animation-duration:${5+Math.random()*7}s;
-      animation-delay:${Math.random()*10}s;
-    `;
-    container.appendChild(el);
+/* FIREFLIES */
+(function(){
+  var c=document.getElementById('ff');
+  var cols=['#F5D060','#40E0D0','#F5D060','#F5D060','#EE88FF'];
+  for(var i=0;i<28;i++){
+    var el=document.createElement('div');
+    el.className='f';
+    var col=cols[Math.floor(Math.random()*cols.length)];
+    var sz=1.8+Math.random()*2.2;
+    el.style.cssText='left:'+Math.random()*100+'%;top:'+(12+Math.random()*74)+'%;'
+      +'width:'+sz+'px;height:'+sz+'px;'
+      +'background:'+col+';box-shadow:0 0 '+(3+Math.random()*4)+'px 2px '+col+';'
+      +'animation-duration:'+(4.5+Math.random()*7)+'s;'
+      +'animation-delay:'+Math.random()*11+'s;';
+    c.appendChild(el);
   }
 })();
 
-/* ════════════════════════════════════
-   AUDIO SYSTEM  — Crossfade Player
-   • raw.githubusercontent.com URLs (no redirect)
-   • Two audio elements for gapless crossfade
-   • Playback rate 0.5× (ambient slow)
-   • Volume 0.60
-   • Toggle button top-right
-════════════════════════════════════ */
-(function() {
-  const BASE = 'https://raw.githubusercontent.com/VaelHae/elaria-official/main/';
-  const TRACKS = [
+/* ===================================================
+   AUDIO SYSTEM
+   - Klik tombol Music → mulai. Klik lagi → mute/unmute
+   - URL langsung ke raw.githubusercontent.com (no redirect)
+   - playbackRate 0.5 untuk ambient
+   - fade-in volume agar tidak mendadak
+   - ganti track otomatis saat ended
+=================================================== */
+(function(){
+  var BASE='https://raw.githubusercontent.com/VaelHae/elaria-official/main/';
+  var FILES=[
     '69d4b466ca3c7fde94acc815_part1.ogg',
     '69d4b466ca3c7fde94acc815_part2.ogg',
     '69d4b466ca3c7fde94acc815_part3.ogg',
@@ -664,122 +508,81 @@ footer {
     '69d4b466ca3c7fde94acc815_part6.ogg',
     '69d4b466ca3c7fde94acc815_part7.ogg',
     '69d4b466ca3c7fde94acc815_part8.ogg'
-  ].map(t => BASE + t);
+  ];
 
-  const FADE_DURATION = 2.5; // seconds crossfade
-  const PLAYBACK_RATE = 0.5;
-  const TARGET_VOL    = 0.60;
+  var snd=document.getElementById('snd');
+  var btn=document.getElementById('musicBtn');
+  var txt=document.getElementById('btnTxt');
 
-  const elA  = document.getElementById('audioA');
-  const elB  = document.getElementById('audioB');
-  const btn  = document.getElementById('audioBtn');
-  const iconPlay = document.getElementById('iconPlay');
-  const iconMute = document.getElementById('iconMute');
+  var idx=0;
+  var playing=false;
+  var muted=false;
+  var TARGET=0.62;
+  var RATE=0.5;
+  var fadeId=null;
 
-  let active = elA;     // currently playing
-  let standby = elB;    // about to play (preloading)
-  let trackIdx = 0;
-  let muted = false;
-  let started = false;
-  let fadeTimer = null;
-
-  function setRate(el) {
-    el.playbackRate = PLAYBACK_RATE;
-    el.preservesPitch = false; // keep half-speed natural tone (no pitch correction)
+  function applyRate(){
+    try{
+      snd.playbackRate=RATE;
+      snd.preservesPitch=false;
+      if(snd.mozPreservesPitch!==undefined) snd.mozPreservesPitch=false;
+      if(snd.webkitPreservesPitch!==undefined) snd.webkitPreservesPitch=false;
+    }catch(e){}
   }
 
-  function fadeIn(el, duration) {
-    el.volume = 0;
-    const step = TARGET_VOL / (duration * 60);
-    const id = setInterval(() => {
-      if (el.volume + step >= TARGET_VOL) { el.volume = TARGET_VOL; clearInterval(id); }
-      else el.volume += step;
-    }, 1000 / 60);
+  function clearFade(){if(fadeId){clearInterval(fadeId);fadeId=null;}}
+
+  function fadeIn(){
+    clearFade();
+    snd.volume=0;
+    var step=TARGET/100;
+    fadeId=setInterval(function(){
+      var v=Math.min(TARGET,snd.volume+step);
+      snd.volume=v;
+      if(v>=TARGET){clearFade();}
+    },20);
   }
 
-  function fadeOut(el, duration, cb) {
-    const step = el.volume / (duration * 60);
-    const id = setInterval(() => {
-      if (el.volume - step <= 0) {
-        el.volume = 0; el.pause(); el.src = '';
-        clearInterval(id); if (cb) cb();
-      } else { el.volume -= step; }
-    }, 1000 / 60);
+  function playTrack(i){
+    idx=((i%FILES.length)+FILES.length)%FILES.length;
+    snd.src=BASE+FILES[idx];
+    snd.load();
+    snd.volume=0;
+    var p=snd.play();
+    if(p&&p.then){
+      p.then(function(){applyRate();fadeIn();}).catch(function(e){console.warn('Audio play failed:',e);});
+    }else{
+      applyRate();fadeIn();
+    }
   }
 
-  function loadTrack(el, idx) {
-    el.src = TRACKS[idx];
-    el.load();
-    setRate(el);
-  }
+  /* Auto-next track */
+  snd.addEventListener('ended',function(){playTrack(idx+1);});
 
-  function playNext() {
-    trackIdx = (trackIdx + 1) % TRACKS.length;
-    // Load next into standby, then crossfade
-    loadTrack(standby, trackIdx);
-    standby.volume = 0;
-    standby.play().then(() => {
-      setRate(standby);
-      fadeIn(standby, FADE_DURATION);
-      fadeOut(active, FADE_DURATION, () => {
-        // Swap roles
-        const tmp = active; active = standby; standby = tmp;
-      });
-    }).catch(() => {});
-  }
+  /* Keep rate after any browser override */
+  snd.addEventListener('play',function(){applyRate();});
 
-  function startMusic() {
-    if (started) return;
-    started = true;
-    loadTrack(active, trackIdx);
-    active.volume = 0;
-    active.play().then(() => {
-      setRate(active);
-      fadeIn(active, 2);
-      // Pre-load next track 10s before end
-      active.addEventListener('timeupdate', function handler() {
-        const remaining = active.duration - active.currentTime;
-        if (!isNaN(remaining) && remaining < (FADE_DURATION + 1) && !fadeTimer) {
-          fadeTimer = setTimeout(() => {
-            fadeTimer = null;
-            playNext();
-          }, 0);
-        }
-      });
-    }).catch(() => {});
-  }
-
-  // When a track naturally ends (safety net)
-  [elA, elB].forEach(el => {
-    el.addEventListener('ended', playNext);
-    el.addEventListener('play', () => setRate(el));
-  });
-
-  // Toggle button
-  btn.addEventListener('click', () => {
-    if (!started) { startMusic(); return; }
-    muted = !muted;
-    if (muted) {
-      [elA, elB].forEach(e => e.volume = 0);
-      btn.classList.add('muted');
-      iconPlay.style.display = 'none';
-      iconMute.style.display = '';
+  /* Button click handler */
+  btn.addEventListener('click',function(){
+    if(!playing){
+      playing=true;
+      muted=false;
+      btn.classList.remove('off');
+      txt.textContent='Music';
+      playTrack(0);
+    } else if(!muted){
+      muted=true;
+      clearFade();
+      snd.volume=0;
+      btn.classList.add('off');
+      txt.textContent='Muted';
     } else {
-      fadeIn(active, 1.5);
-      btn.classList.remove('muted');
-      iconPlay.style.display = '';
-      iconMute.style.display = 'none';
+      muted=false;
+      btn.classList.remove('off');
+      txt.textContent='Music';
+      fadeIn();
     }
   });
-
-  // Auto-start on first user interaction (browser policy)
-  const autoStart = () => { startMusic(); };
-  ['click','keydown','scroll','touchstart'].forEach(ev =>
-    document.addEventListener(ev, autoStart, { once: true, passive: true })
-  );
-
-  // Also try immediate autoplay
-  setTimeout(startMusic, 300);
 })();
 </script>
 </body>
