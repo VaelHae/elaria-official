@@ -17,22 +17,15 @@
   --bg:#060E06;
   --parch:#F5E8C0;
   --pink:#DD44AA;
+  --violet:#9B59B6;
 }
 
 html{scroll-behavior:smooth}
-
-body{
-  font-family:'IM Fell English',Georgia,serif;
-  background:var(--bg);
-  color:var(--parch);
-  overflow-x:hidden;
-}
+body{font-family:'IM Fell English',Georgia,serif;background:var(--bg);color:var(--parch);overflow-x:hidden;}
 
 /* ── BG ── */
-.bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background:
-    radial-gradient(ellipse 60% 50% at 10% 90%,rgba(0,130,80,.09) 0%,transparent 65%),
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 10% 90%,rgba(0,130,80,.09) 0%,transparent 65%),
     radial-gradient(ellipse 50% 60% at 88% 12%,rgba(0,170,150,.06) 0%,transparent 65%),
     linear-gradient(180deg,#050C05 0%,#081208 40%,#0A1A0A 70%,#050C05 100%);
 }
@@ -41,36 +34,26 @@ body{
 .ff{position:fixed;inset:0;z-index:1;pointer-events:none}
 .f{position:absolute;border-radius:50%;opacity:0;animation:ff linear infinite}
 @keyframes ff{
-  0%  {transform:translate(0,0) scale(0);opacity:0}
-  8%  {opacity:.9;transform:translate(6px,-15px) scale(1)}
-  55% {opacity:.4;transform:translate(-10px,-55px) scale(.75)}
+  0%{transform:translate(0,0) scale(0);opacity:0}
+  8%{opacity:.9;transform:translate(6px,-15px) scale(1)}
+  55%{opacity:.4;transform:translate(-10px,-55px) scale(.75)}
   100%{transform:translate(2px,-115px) scale(0);opacity:0}
 }
 
 /* ── MUSIC BUTTON ── */
 #musicBtn{
   position:fixed;bottom:24px;right:24px;z-index:300;
-  display:flex;align-items:center;gap:9px;
-  padding:9px 16px 9px 13px;
-  background:rgba(6,14,6,.9);
-  border:1px solid rgba(212,160,23,.3);
-  border-radius:24px;
-  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;
-  text-transform:uppercase;color:rgba(245,232,192,.65);
-  cursor:pointer;
-  backdrop-filter:blur(12px);
-  transition:border-color .3s,color .3s,box-shadow .3s;
-  user-select:none;
+  display:flex;align-items:center;gap:9px;padding:9px 16px 9px 13px;
+  background:rgba(6,14,6,.9);border:1px solid rgba(212,160,23,.3);border-radius:24px;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(245,232,192,.65);cursor:pointer;backdrop-filter:blur(12px);
+  transition:border-color .3s,color .3s,box-shadow .3s;user-select:none;
 }
 #musicBtn:hover{border-color:var(--gold);color:var(--gold-l);box-shadow:0 0 20px rgba(212,160,23,.22)}
 #musicBtn .mico{width:16px;height:16px;fill:var(--gold);flex-shrink:0;transition:fill .2s}
 #musicBtn.off .mico{fill:rgba(245,232,192,.28)}
 #musicBtn.off{color:rgba(245,232,192,.28);border-color:rgba(245,232,192,.1)}
-.mdot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--teal);box-shadow:0 0 6px var(--teal-g);
-  animation:pulse-d 2s ease-in-out infinite;flex-shrink:0;
-}
+.mdot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal-g);animation:pulse-d 2s ease-in-out infinite;flex-shrink:0;}
 #musicBtn.off .mdot{background:rgba(245,232,192,.18);box-shadow:none;animation:none}
 @keyframes pulse-d{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.55);opacity:1}}
 
@@ -81,250 +64,308 @@ nav{
   padding:15px 40px;
   background:linear-gradient(180deg,rgba(4,8,4,.97) 0%,transparent 100%);
 }
-nav::after{
-  content:'';position:absolute;bottom:0;left:40px;right:40px;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(212,160,23,.13),transparent);
-}
-.brand{
-  font-family:'Cinzel',serif;font-size:12px;font-weight:700;
-  letter-spacing:4px;color:var(--gold);text-transform:uppercase;
-  display:flex;align-items:center;gap:9px;
-}
+nav::after{content:'';position:absolute;bottom:0;left:40px;right:40px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,160,23,.13),transparent);}
+.brand{font-family:'Cinzel',serif;font-size:12px;font-weight:700;letter-spacing:4px;
+  color:var(--gold);text-transform:uppercase;display:flex;align-items:center;gap:9px;}
 .bgem{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 7px var(--teal-g)}
 .links{display:flex;gap:30px;list-style:none}
-.links a{
-  font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;
-  text-transform:uppercase;color:rgba(245,232,192,.44);text-decoration:none;
-  position:relative;padding-bottom:3px;transition:color .25s;
-}
+.links a{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(245,232,192,.44);text-decoration:none;position:relative;padding-bottom:3px;transition:color .25s;}
 .links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold-l);transition:width .3s}
 .links a:hover{color:var(--gold-l)}
 .links a:hover::after{width:100%}
-.links .cta{
-  padding:6px 18px;border:1px solid rgba(212,160,23,.28);border-radius:2px;
-  color:var(--gold)!important;transition:background .25s,border-color .25s!important;
-}
+.links .cta{padding:6px 18px;border:1px solid rgba(212,160,23,.28);border-radius:2px;
+  color:var(--gold)!important;transition:background .25s,border-color .25s!important;}
 .links .cta::after{display:none!important}
 .links .cta:hover{background:rgba(212,160,23,.1);border-color:var(--gold)!important}
 
 /* ── HERO ── */
-.hero{
-  position:relative;z-index:10;min-height:100vh;
+.hero{position:relative;z-index:10;min-height:100vh;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:110px 24px 80px;overflow:hidden;
-}
-.hero-img{
-  position:absolute;inset:0;
+  text-align:center;padding:110px 24px 80px;overflow:hidden;}
+.hero-img{position:absolute;inset:0;
   background:url('https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png') center 30%/cover;
-  opacity:.17;filter:saturate(1.7) brightness(.6);
-}
-.hero-fade{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(ellipse 68% 58% at 50% 52%,transparent 0%,rgba(5,11,5,.6) 72%),
-    linear-gradient(180deg,rgba(4,8,4,.55) 0%,transparent 22%,transparent 55%,rgba(4,8,4,.97) 100%);
-}
+  opacity:.17;filter:saturate(1.7) brightness(.6);}
+.hero-fade{position:absolute;inset:0;
+  background:radial-gradient(ellipse 68% 58% at 50% 52%,transparent 0%,rgba(5,11,5,.6) 72%),
+    linear-gradient(180deg,rgba(4,8,4,.55) 0%,transparent 22%,transparent 55%,rgba(4,8,4,.97) 100%);}
 .h-rule{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,.16),transparent)}
 .h-rule.top{top:86px}.h-rule.bot{bottom:76px}
-
-.badge{
-  position:relative;z-index:2;
-  display:inline-flex;align-items:center;gap:12px;
-  font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:6px;
-  text-transform:uppercase;color:var(--gold);opacity:.58;
-  margin-bottom:26px;animation:up 1s ease-out both;
-}
+.badge{position:relative;z-index:2;display:inline-flex;align-items:center;gap:12px;
+  font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:6px;text-transform:uppercase;
+  color:var(--gold);opacity:.58;margin-bottom:26px;animation:up 1s ease-out both;}
 .bdot{width:4px;height:4px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal-g)}
-
 .logo{position:relative;z-index:2;animation:logo-in 1.2s .1s ease-out both}
 @keyframes logo-in{from{opacity:0;transform:translateY(22px) scale(.96);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
-.logo img{
-  max-width:490px;width:86vw;
+.logo img{max-width:490px;width:86vw;
   filter:drop-shadow(0 0 32px rgba(212,160,23,.45)) drop-shadow(0 0 65px rgba(0,200,200,.16));
-  animation:logo-b 5s 1.4s ease-in-out infinite;
-}
+  animation:logo-b 5s 1.4s ease-in-out infinite;}
 @keyframes logo-b{
   0%,100%{filter:drop-shadow(0 0 32px rgba(212,160,23,.45)) drop-shadow(0 0 65px rgba(0,200,200,.16))}
-  50%{filter:drop-shadow(0 0 52px rgba(212,160,23,.72)) drop-shadow(0 0 88px rgba(0,220,210,.28))}
-}
-
-.tagline{
-  position:relative;z-index:2;
-  font-family:'IM Fell English',serif;font-style:italic;
-  font-size:15px;letter-spacing:2px;color:rgba(245,232,192,.44);
-  margin-top:8px;margin-bottom:42px;animation:up 1s .5s ease-out both;
-}
+  50%{filter:drop-shadow(0 0 52px rgba(212,160,23,.72)) drop-shadow(0 0 88px rgba(0,220,210,.28))}}
+.tagline{position:relative;z-index:2;font-family:'IM Fell English',serif;font-style:italic;
+  font-size:15px;letter-spacing:2px;color:rgba(245,232,192,.44);margin-top:8px;margin-bottom:42px;animation:up 1s .5s ease-out both;}
 @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
 .ctas{position:relative;z-index:2;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:up 1s .75s ease-out both}
-
-.btn-gold{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:12px 34px;
-  background:linear-gradient(130deg,#7A5200,#C8940E,#EEC635,#C8940E);
-  background-size:250%;
-  border:none;border-radius:2px;
-  font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;letter-spacing:3px;
-  text-transform:uppercase;color:#120A00;text-decoration:none;
+.btn-gold{display:inline-flex;align-items:center;gap:8px;padding:12px 34px;
+  background:linear-gradient(130deg,#7A5200,#C8940E,#EEC635,#C8940E);background-size:250%;
+  border:none;border-radius:2px;font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:#120A00;text-decoration:none;
   box-shadow:0 0 18px rgba(212,160,23,.22),inset 0 1px 0 rgba(255,255,255,.14);
-  animation:shim 3.5s 2s linear infinite;
-  transition:transform .2s,box-shadow .3s;
-  position:relative;overflow:hidden;
-}
+  animation:shim 3.5s 2s linear infinite;transition:transform .2s,box-shadow .3s;
+  position:relative;overflow:hidden;}
 @keyframes shim{0%{background-position:0%}100%{background-position:250%}}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 5px 26px rgba(212,160,23,.5)}
-.btn-gold::after{
-  content:'';position:absolute;inset:0;
+.btn-gold::after{content:'';position:absolute;inset:0;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent);
-  transform:translateX(-100%);transition:transform .5s;
-}
+  transform:translateX(-100%);transition:transform .5s;}
 .btn-gold:hover::after{transform:translateX(100%)}
-
-.btn-ghost{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:12px 26px;background:transparent;
-  border:1px solid rgba(245,232,192,.14);border-radius:2px;
-  font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:2.5px;
-  text-transform:uppercase;color:rgba(245,232,192,.48);text-decoration:none;
-  transition:border-color .3s,color .3s,background .3s;
-}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:transparent;
+  border:1px solid rgba(245,232,192,.14);border-radius:2px;font-family:'Cinzel',serif;
+  font-size:11.5px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(245,232,192,.48);
+  text-decoration:none;transition:border-color .3s,color .3s,background .3s;}
 .btn-ghost:hover{border-color:rgba(245,232,192,.36);color:var(--parch);background:rgba(245,232,192,.04)}
-
-.s-hint{
-  position:absolute;bottom:30px;
-  left:0;right:0;margin:0 auto;
-  width:fit-content;
-  z-index:10;
-  display:flex;flex-direction:column;align-items:center;gap:7px;
-  animation:shint 1s 2s ease-out both;
-}
+.s-hint{position:absolute;bottom:30px;left:0;right:0;margin:0 auto;width:fit-content;z-index:10;
+  display:flex;flex-direction:column;align-items:center;gap:7px;animation:shint 1s 2s ease-out both;}
 @keyframes shint{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.s-hint span{
-  font-family:'Cinzel',serif;font-size:8px;letter-spacing:5px;
-  text-transform:uppercase;color:var(--gold);opacity:.4;
-  white-space:nowrap;
-}
+.s-hint span{font-family:'Cinzel',serif;font-size:8px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);opacity:.4;white-space:nowrap;}
 .needle-wrap{display:flex;flex-direction:column;align-items:center;gap:0}
 .needle-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.35;margin-bottom:3px}
-.needle{
-  width:1px;height:36px;
-  background:linear-gradient(to bottom,rgba(212,160,23,.45),transparent);
-  animation:nd 1.7s ease-in-out infinite;
-}
-@keyframes nd{
-  0%  {transform-origin:top;transform:scaleY(0);opacity:0}
-  15% {opacity:1}
-  65% {transform:scaleY(1);opacity:.8}
-  100%{transform:scaleY(1);opacity:0}
-}
+.needle{width:1px;height:36px;background:linear-gradient(to bottom,rgba(212,160,23,.45),transparent);animation:nd 1.7s ease-in-out infinite;}
+@keyframes nd{0%{transform-origin:top;transform:scaleY(0);opacity:0}15%{opacity:1}65%{transform:scaleY(1);opacity:.8}100%{transform:scaleY(1);opacity:0}}
 
 /* ── DIVIDER ── */
-.divider{
-  position:relative;z-index:10;
-  display:flex;align-items:center;justify-content:center;
-  padding:0 40px;max-width:560px;margin:0 auto;gap:14px;
-}
+.divider{position:relative;z-index:10;display:flex;align-items:center;justify-content:center;
+  padding:0 40px;max-width:560px;margin:0 auto;gap:14px;}
 .dline{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(212,160,23,.26),transparent)}
 .dgem{width:7px;height:7px;transform:rotate(45deg);flex-shrink:0}
 .dgem.t{background:var(--teal);box-shadow:0 0 7px var(--teal-g)}
 .dgem.p{background:var(--pink);box-shadow:0 0 7px var(--pink)}
+.dgem.v{background:var(--violet);box-shadow:0 0 7px var(--violet)}
+
+/* ── LABELS & TITLES ── */
+.lbl{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--teal);opacity:.7;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.lbl::before{content:'';width:20px;height:1px;background:var(--teal);opacity:.5}
+.lbl.pink{color:var(--pink);opacity:.7}
+.lbl.pink::before{background:var(--pink)}
+.lbl.violet{color:var(--violet);opacity:.7}
+.lbl.violet::before{background:var(--violet)}
+.lbl.gold{color:var(--gold);opacity:.7}
+.lbl.gold::before{background:var(--gold)}
+.ttl{font-family:'Cinzel Decorative',serif;font-size:clamp(19px,3.2vw,32px);
+  color:var(--gold-l);text-shadow:0 0 26px rgba(212,160,23,.3);line-height:1.25;margin-bottom:18px;}
+.body{font-family:'IM Fell English',serif;font-size:15.5px;line-height:1.9;
+  color:rgba(245,232,192,.6);max-width:620px;}
+.body strong{color:var(--gold);font-style:normal}
 
 /* ── SECTION ── */
 .sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:80px 40px}
 
-.lbl{
-  font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:5px;
-  text-transform:uppercase;color:var(--teal);opacity:.7;
-  margin-bottom:10px;display:flex;align-items:center;gap:10px;
-}
-.lbl::before{content:'';width:20px;height:1px;background:var(--teal);opacity:.5}
-
-.ttl{
-  font-family:'Cinzel Decorative',serif;
-  font-size:clamp(19px,3.2vw,32px);
-  color:var(--gold-l);text-shadow:0 0 26px rgba(212,160,23,.3);
-  line-height:1.25;margin-bottom:18px;
-}
-
-.body{
-  font-family:'IM Fell English',serif;font-size:15.5px;line-height:1.9;
-  color:rgba(245,232,192,.6);max-width:620px;
-}
-.body strong{color:var(--gold);font-style:normal}
-
 /* ── ABOUT ── */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:center}
-.about-img{
-  position:relative;border-radius:3px;overflow:hidden;
+.about-img{position:relative;border-radius:3px;overflow:hidden;
   border:1px solid rgba(212,160,23,.13);
-  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(0,150,120,.08);
-}
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(0,150,120,.08);}
 .about-img img{width:100%;display:block;filter:brightness(.82) saturate(1.2);transition:filter .5s,transform .6s ease}
 .about-img:hover img{filter:brightness(.96) saturate(1.42);transform:scale(1.04)}
 .about-img::before{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(135deg,rgba(0,206,209,.06) 0%,transparent 55%);pointer-events:none}
-.about-img::after{
-  content:'';position:absolute;top:10px;right:10px;z-index:2;
-  width:22px;height:22px;pointer-events:none;
-  border-top:1px solid rgba(212,160,23,.38);border-right:1px solid rgba(212,160,23,.38);
-}
+.about-img::after{content:'';position:absolute;top:10px;right:10px;z-index:2;width:22px;height:22px;pointer-events:none;
+  border-top:1px solid rgba(212,160,23,.38);border-right:1px solid rgba(212,160,23,.38);}
 
-/* ── STATS ── */
-.stats{
-  position:relative;z-index:10;padding:38px 40px;
+/* ── LIVE STATS ── */
+.stats{position:relative;z-index:10;padding:44px 40px;
   background:linear-gradient(90deg,transparent,rgba(13,35,13,.5),transparent);
-  border-top:1px solid rgba(212,160,23,.07);border-bottom:1px solid rgba(212,160,23,.07);
-}
-.stats-row{display:flex;justify-content:center;gap:72px;flex-wrap:wrap;max-width:580px;margin:0 auto}
-.stat{text-align:center}
-.sn{font-family:'Cinzel Decorative',serif;font-size:29px;color:var(--gold-l);text-shadow:0 0 18px rgba(212,160,23,.4);display:block;line-height:1;margin-bottom:8px}
+  border-top:1px solid rgba(212,160,23,.07);border-bottom:1px solid rgba(212,160,23,.07);}
+.stats-inner{max-width:760px;margin:0 auto;}
+.stats-title{font-family:'Cinzel',serif;font-size:9px;letter-spacing:5px;text-transform:uppercase;
+  color:var(--teal);opacity:.55;text-align:center;margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:10px;}
+.stats-title::before,.stats-title::after{content:'';width:30px;height:1px;background:rgba(0,206,209,.3)}
+.stats-row{display:flex;justify-content:center;gap:60px;flex-wrap:wrap;}
+.stat{text-align:center;position:relative;}
+.stat + .stat::before{content:'';position:absolute;left:-30px;top:50%;transform:translateY(-50%);
+  width:1px;height:38px;background:linear-gradient(to bottom,transparent,rgba(212,160,23,.18),transparent);}
+.sn{font-family:'Cinzel Decorative',serif;font-size:29px;color:var(--gold-l);
+  text-shadow:0 0 18px rgba(212,160,23,.4);display:block;line-height:1;margin-bottom:8px;
+  transition:color .4s;}
 .sn.t{color:var(--teal);text-shadow:0 0 18px var(--teal-g)}
+.sn.p{color:var(--pink);text-shadow:0 0 18px var(--pink)}
 .sl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:3.5px;text-transform:uppercase;color:rgba(245,232,192,.3)}
+.live-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:#4eff91;
+  box-shadow:0 0 7px #4eff91;vertical-align:middle;margin-right:5px;
+  animation:pulse-d 1.5s ease-in-out infinite;}
+.stat-loading{font-family:'Cinzel',serif;font-size:10px;letter-spacing:2px;color:rgba(245,232,192,.22);animation:blink 1.2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:.8}}
 
 /* ── MAP ── */
 .map-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
-.map-card{
-  position:relative;margin-top:34px;border-radius:3px;overflow:hidden;
-  border:1px solid rgba(212,160,23,.15);
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
-  transition:box-shadow .4s;
-}
+.map-card{position:relative;margin-top:34px;border-radius:3px;overflow:hidden;
+  border:1px solid rgba(212,160,23,.15);box-shadow:0 30px 80px rgba(0,0,0,.5);transition:box-shadow .4s;}
 .map-card:hover{box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 50px rgba(0,150,100,.1)}
-.map-card img{width:100%;height:370px;object-fit:cover;object-position:center 38%;filter:saturate(1.3) brightness(.62);display:block;transition:filter .5s,transform .6s ease}
+.map-card img{width:100%;height:370px;object-fit:cover;object-position:center 38%;
+  filter:saturate(1.3) brightness(.62);display:block;transition:filter .5s,transform .6s ease}
 .map-card:hover img{filter:saturate(1.52) brightness(.78);transform:scale(1.03)}
-.map-over{
-  position:absolute;inset:0;
-  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;
-  padding:34px 38px;
-  background:linear-gradient(to top,rgba(4,8,4,.93) 0%,rgba(4,8,4,.22) 52%,transparent 100%);
-}
-.map-big{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.8vw,36px);color:var(--gold-l);text-shadow:0 0 22px rgba(212,160,23,.52);line-height:1.1;margin-bottom:5px}
-.map-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:13.5px;color:rgba(245,232,192,.4);margin-bottom:20px}
-.map-btn{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:9px 24px;background:rgba(0,0,0,.28);backdrop-filter:blur(8px);
-  border:1px solid rgba(212,160,23,.4);border-radius:2px;
-  font-family:'Cinzel',serif;font-size:9.5px;font-weight:700;letter-spacing:3px;
+.map-over{position:absolute;inset:0;display:flex;flex-direction:column;align-items:flex-start;
+  justify-content:flex-end;padding:34px 38px;
+  background:linear-gradient(to top,rgba(4,8,4,.93) 0%,rgba(4,8,4,.22) 52%,transparent 100%);}
+.map-big{font-family:'Cinzel Decorative',serif;font-size:clamp(20px,3.8vw,36px);
+  color:var(--gold-l);text-shadow:0 0 22px rgba(212,160,23,.52);line-height:1.1;margin-bottom:5px}
+.map-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:13.5px;
+  color:rgba(245,232,192,.4);margin-bottom:20px}
+.map-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 24px;
+  background:rgba(0,0,0,.28);backdrop-filter:blur(8px);border:1px solid rgba(212,160,23,.4);
+  border-radius:2px;font-family:'Cinzel',serif;font-size:9.5px;font-weight:700;letter-spacing:3px;
   text-transform:uppercase;color:var(--gold-l);text-decoration:none;
-  transition:background .3s,border-color .3s,box-shadow .3s;
-}
+  transition:background .3s,border-color .3s,box-shadow .3s;}
 .map-btn:hover{background:rgba(212,160,23,.1);border-color:var(--gold);box-shadow:0 0 18px rgba(212,160,23,.2)}
 .map-btn svg{width:11px;height:11px;fill:var(--gold-l)}
 
 /* ── FEATURES ── */
 .feat-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
 .feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(225px,1fr));gap:15px;margin-top:42px}
-.fc{
-  position:relative;overflow:hidden;padding:25px 21px;
+.fc{position:relative;overflow:hidden;padding:25px 21px;
   background:linear-gradient(150deg,rgba(14,36,14,.65),rgba(5,11,5,.88));
   border:1px solid rgba(212,160,23,.09);border-radius:3px;
-  transition:border-color .3s,transform .3s,box-shadow .3s;cursor:default;
-}
+  transition:border-color .3s,transform .3s,box-shadow .3s;cursor:default;}
 .fc:hover{border-color:rgba(212,160,23,.25);transform:translateY(-5px);box-shadow:0 14px 38px rgba(0,0,0,.42)}
-.fc::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;background:linear-gradient(to bottom,var(--gold),var(--teal));transition:height .4s ease}
+.fc::before{content:'';position:absolute;top:0;left:0;width:2px;height:0;
+  background:linear-gradient(to bottom,var(--gold),var(--teal));transition:height .4s ease}
 .fc:hover::before{height:100%}
 .fi{font-size:25px;margin-bottom:12px;display:block;filter:drop-shadow(0 0 5px rgba(212,160,23,.28))}
-.ft{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:1.8px;color:var(--gold-l);margin-bottom:8px;text-transform:uppercase}
-.fd{font-family:'IM Fell English',serif;font-size:13px;line-height:1.7;color:rgba(245,232,192,.42);font-style:italic}
+.ft{font-family:'Cinzel',serif;font-size:11px;font-weight:700;letter-spacing:1.8px;
+  color:var(--gold-l);margin-bottom:8px;text-transform:uppercase}
+.fd{font-family:'IM Fell English',serif;font-size:13px;line-height:1.7;
+  color:rgba(245,232,192,.42);font-style:italic}
+
+/* ── EVENTS ── */
+.events-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
+.events-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:40px}
+.ev-card{position:relative;overflow:hidden;border-radius:3px;
+  border:1px solid rgba(221,68,170,.15);
+  background:linear-gradient(145deg,rgba(18,8,22,.85),rgba(5,11,5,.95));
+  transition:transform .3s,box-shadow .4s,border-color .3s;cursor:default;}
+.ev-card:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 30px rgba(221,68,170,.1);border-color:rgba(221,68,170,.35)}
+.ev-img-wrap{position:relative;height:160px;overflow:hidden;}
+.ev-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.55) saturate(1.3);transition:filter .5s,transform .6s}
+.ev-card:hover .ev-img-wrap img{filter:brightness(.72) saturate(1.5);transform:scale(1.06)}
+.ev-img-over{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(18,8,22,.95) 100%)}
+.ev-badge{position:absolute;top:12px;left:14px;
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:3px;text-transform:uppercase;
+  padding:4px 12px;border-radius:20px;font-weight:700;}
+.ev-badge.active{background:rgba(78,255,145,.12);color:#4eff91;border:1px solid rgba(78,255,145,.35)}
+.ev-badge.soon{background:rgba(245,208,96,.1);color:var(--gold-l);border:1px solid rgba(245,208,96,.3)}
+.ev-badge.ended{background:rgba(150,150,150,.1);color:rgba(245,232,192,.3);border:1px solid rgba(150,150,150,.2)}
+.ev-badge.active::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;
+  background:#4eff91;box-shadow:0 0 6px #4eff91;margin-right:6px;vertical-align:middle;animation:pulse-d 1.4s infinite}
+.ev-body{padding:20px 20px 22px;}
+.ev-date{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(245,232,192,.28);margin-bottom:8px;}
+.ev-title{font-family:'Cinzel Decorative',serif;font-size:15px;color:var(--gold-l);
+  line-height:1.3;margin-bottom:8px;text-shadow:0 0 16px rgba(212,160,23,.28);}
+.ev-desc{font-family:'IM Fell English',serif;font-size:13px;line-height:1.65;
+  color:rgba(245,232,192,.42);font-style:italic;margin-bottom:16px;}
+.ev-footer{display:flex;align-items:center;justify-content:space-between;}
+.ev-tag{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;
+  padding:4px 10px;border-radius:2px;background:rgba(155,89,182,.12);
+  color:rgba(155,89,182,.8);border:1px solid rgba(155,89,182,.25);}
+.ev-arrow{font-size:16px;color:rgba(212,160,23,.4);transition:color .3s,transform .2s}
+.ev-card:hover .ev-arrow{color:var(--gold-l);transform:translateX(4px)}
+.ev-side-accent{position:absolute;top:0;bottom:0;left:0;width:2px;
+  background:linear-gradient(to bottom,var(--pink),transparent)}
+
+/* ── STORE ── */
+.store-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
+.store-card{
+  position:relative;overflow:hidden;border-radius:4px;
+  border:1px solid rgba(212,160,23,.2);
+  background:linear-gradient(135deg,rgba(14,28,14,.9) 0%,rgba(8,14,8,.98) 60%,rgba(20,10,30,.9) 100%);
+  padding:52px 56px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;
+  transition:border-color .4s,box-shadow .4s;
+}
+.store-card:hover{border-color:rgba(212,160,23,.42);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 50px rgba(212,160,23,.07)}
+.store-card::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 60% 80% at 90% 50%,rgba(155,89,182,.06) 0%,transparent 65%),
+    radial-gradient(ellipse 50% 50% at 10% 50%,rgba(0,206,209,.04) 0%,transparent 60%);}
+.store-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,160,23,.3),rgba(155,89,182,.25),transparent)}
+.store-corner{position:absolute;width:28px;height:28px;pointer-events:none;}
+.store-corner.tl{top:12px;left:12px;border-top:1px solid rgba(212,160,23,.35);border-left:1px solid rgba(212,160,23,.35)}
+.store-corner.br{bottom:12px;right:12px;border-bottom:1px solid rgba(212,160,23,.35);border-right:1px solid rgba(212,160,23,.35)}
+.store-icon{font-size:48px;margin-bottom:14px;display:block;filter:drop-shadow(0 0 12px rgba(212,160,23,.4))}
+.store-name{font-family:'Cinzel Decorative',serif;font-size:clamp(22px,3vw,36px);
+  color:var(--gold-l);text-shadow:0 0 28px rgba(212,160,23,.45);margin-bottom:8px;line-height:1.2;}
+.store-sub{font-family:'IM Fell English',serif;font-style:italic;font-size:15px;
+  color:rgba(245,232,192,.45);margin-bottom:22px;max-width:480px;line-height:1.7;}
+.store-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.s-tag{font-family:'Cinzel',serif;font-size:8px;letter-spacing:2.5px;text-transform:uppercase;
+  padding:5px 12px;border-radius:2px;color:rgba(245,232,192,.5);border:1px solid rgba(245,232,192,.1);}
+.s-tag.g{color:var(--gold);border-color:rgba(212,160,23,.25);background:rgba(212,160,23,.06)}
+.s-tag.t{color:var(--teal);border-color:rgba(0,206,209,.25);background:rgba(0,206,209,.05)}
+.s-tag.v{color:var(--violet);border-color:rgba(155,89,182,.25);background:rgba(155,89,182,.05)}
+.store-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 36px;
+  background:linear-gradient(130deg,#7A5200,#C8940E,#EEC635,#C8940E);background-size:250%;
+  border:none;border-radius:2px;font-family:'Cinzel',serif;font-size:12px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:#120A00;text-decoration:none;cursor:pointer;
+  box-shadow:0 0 22px rgba(212,160,23,.28),inset 0 1px 0 rgba(255,255,255,.14);
+  animation:shim 3.5s linear infinite;transition:transform .2s,box-shadow .3s;position:relative;overflow:hidden;}
+.store-btn:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(212,160,23,.55)}
+.store-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s}
+.store-btn:hover::after{transform:translateX(100%)}
+.store-visual{display:flex;align-items:center;justify-content:center;}
+.store-orb{width:180px;height:180px;border-radius:50%;position:relative;flex-shrink:0;
+  background:radial-gradient(circle at 35% 35%,rgba(245,208,96,.18) 0%,rgba(155,89,182,.08) 45%,rgba(0,206,209,.06) 70%,transparent 100%);
+  border:1px solid rgba(212,160,23,.18);
+  box-shadow:0 0 50px rgba(212,160,23,.12),inset 0 0 40px rgba(155,89,182,.08);
+  animation:orb-rot 12s linear infinite;}
+@keyframes orb-rot{0%{box-shadow:0 0 50px rgba(212,160,23,.12),inset 0 0 40px rgba(155,89,182,.08)}
+  50%{box-shadow:0 0 70px rgba(155,89,182,.18),inset 0 0 50px rgba(212,160,23,.1)}
+  100%{box-shadow:0 0 50px rgba(212,160,23,.12),inset 0 0 40px rgba(155,89,182,.08)}}
+.orb-icon{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:60px;
+  filter:drop-shadow(0 0 14px rgba(212,160,23,.5));}
+
+/* ── CREDITS ── */
+.credits-sec{position:relative;z-index:10;max-width:1060px;margin:0 auto;padding:60px 40px 80px}
+.credits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:40px}
+.credit-card{position:relative;overflow:hidden;padding:28px 24px 24px;border-radius:3px;
+  background:linear-gradient(150deg,rgba(14,30,14,.7),rgba(5,11,5,.9));
+  border:1px solid rgba(212,160,23,.08);
+  transition:transform .3s,border-color .3s,box-shadow .3s;}
+.credit-card:hover{transform:translateY(-5px);border-color:rgba(212,160,23,.2);box-shadow:0 16px 44px rgba(0,0,0,.44)}
+.credit-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,160,23,.22),rgba(0,206,209,.12),transparent);
+  opacity:0;transition:opacity .3s;}
+.credit-card:hover::before{opacity:1}
+.credit-avatar{width:64px;height:64px;border-radius:6px;margin-bottom:16px;
+  overflow:hidden;position:relative;flex-shrink:0;
+  border:1px solid rgba(212,160,23,.22);
+  background:linear-gradient(135deg,rgba(18,14,6,.9),rgba(8,20,8,.9));
+  box-shadow:0 0 24px rgba(0,0,0,.5),0 0 14px rgba(212,160,23,.08);}
+.credit-avatar img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform .4s ease,filter .4s ease;filter:brightness(.88) saturate(1.1);}
+.credit-card:hover .credit-avatar img{transform:scale(1.08);filter:brightness(1) saturate(1.25);}
+/* shimmer overlay on avatar */
+.credit-avatar::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.06) 0%,transparent 60%);pointer-events:none;}
+.credit-studio{font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(245,232,192,.25);margin-bottom:6px;}
+.credit-name{font-family:'Cinzel Decorative',serif;font-size:16px;color:var(--gold-l);
+  text-shadow:0 0 14px rgba(212,160,23,.28);margin-bottom:4px;line-height:1.3;}
+.credit-by{font-family:'IM Fell English',serif;font-style:italic;font-size:13px;
+  color:rgba(245,232,192,.36);}
+.credit-by strong{color:rgba(245,232,192,.6);font-style:normal;font-weight:600}
+.credit-role{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;}
+.credit-tag{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:2px;text-transform:uppercase;
+  padding:3px 9px;border-radius:2px;background:rgba(212,160,23,.07);
+  color:rgba(212,160,23,.6);border:1px solid rgba(212,160,23,.15);}
+.credit-tag.teal{background:rgba(0,206,209,.06);color:rgba(0,206,209,.6);border-color:rgba(0,206,209,.18)}
+.credit-tag.pink{background:rgba(221,68,170,.06);color:rgba(221,68,170,.6);border-color:rgba(221,68,170,.18)}
+.credit-accent{position:absolute;bottom:0;left:0;right:0;height:2px;}
+.credit-accent.a1{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.credit-accent.a2{background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+.credit-accent.a3{background:linear-gradient(90deg,transparent,var(--pink),transparent)}
+/* special: Elaria Official card wider */
+.credit-card.main{grid-column: span 1;}
 
 /* ── FOOTER ── */
 footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;border-top:1px solid rgba(212,160,23,.07)}
@@ -339,7 +380,10 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
   .links{display:none}
   .about-grid{grid-template-columns:1fr;gap:32px}
   .stats-row{gap:38px}
-  .sec,.map-sec,.feat-sec{padding-left:20px;padding-right:20px}
+  .stat + .stat::before{display:none}
+  .sec,.map-sec,.feat-sec,.events-sec,.store-sec,.credits-sec{padding-left:20px;padding-right:20px}
+  .store-card{grid-template-columns:1fr;padding:32px 24px;}
+  .store-visual{display:none}
   #musicBtn{bottom:16px;right:16px}
 }
 </style>
@@ -348,8 +392,6 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
 
 <div class="bg"></div>
 <div class="ff" id="ff"></div>
-
-<!-- single audio element -->
 <audio id="snd" preload="none" style="display:none"></audio>
 
 <!-- MUSIC BUTTON -->
@@ -365,7 +407,9 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
   <ul class="links">
     <li><a href="#about">About</a></li>
     <li><a href="#maps">Maps</a></li>
+    <li><a href="#events">Events</a></li>
     <li><a href="#features">Features</a></li>
+    <li><a href="#store">Store</a></li>
     <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank" class="cta">Play Now</a></li>
   </ul>
 </nav>
@@ -415,12 +459,24 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
   </div>
 </section>
 
-<!-- STATS -->
+<!-- LIVE STATS -->
 <div class="stats">
-  <div class="stats-row">
-    <div class="stat"><span class="sn">&#8734;</span><span class="sl">Adventures Await</span></div>
-    <div class="stat"><span class="sn t">1</span><span class="sl">Active Map</span></div>
-    <div class="stat"><span class="sn">&#9876;</span><span class="sl">Legendary Quests</span></div>
+  <div class="stats-inner">
+    <div class="stats-title"><span class="live-dot"></span>Live Game Statistics</div>
+    <div class="stats-row">
+      <div class="stat">
+        <span class="sn t" id="stat-active"><span class="stat-loading">···</span></span>
+        <span class="sl">Active Players</span>
+      </div>
+      <div class="stat">
+        <span class="sn" id="stat-visits"><span class="stat-loading">···</span></span>
+        <span class="sl">Total Visits</span>
+      </div>
+      <div class="stat">
+        <span class="sn p" id="stat-likes"><span class="stat-loading">···</span></span>
+        <span class="sl">Like Rate</span>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -442,17 +498,196 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
   </div>
 </section>
 
+<!-- EVENTS -->
+<div class="divider"><div class="dline"></div><div class="dgem p"></div><div class="dline"></div></div>
+<section class="events-sec" id="events">
+  <p class="lbl pink">World Events</p>
+  <h2 class="ttl">Tales of the Realm</h2>
+  <p class="body">Seasonal events and limited-time quests shape the living world of Elaria. Each event brings new stories, rewards, and mysteries to uncover.</p>
+  <div class="events-grid">
+
+    <!-- Event 1 – Active -->
+    <div class="ev-card">
+  <div class="ev-side-accent" style="background:linear-gradient(to bottom,#8a2be2,transparent)"></div>
+  
+  <div class="ev-img-wrap">
+    <img src="https://i.ibb.co.com/Fd6zY70/no-Filter.png" alt="Mount Elaria Event">
+    <div class="ev-img-over"></div>
+    <span class="ev-badge active">Live Now</span>
+  </div>
+
+  <div class="ev-body">
+    <div class="ev-date">Deadline: 30 Juni 2026</div>
+    
+    <div class="ev-title">Mount Elaria Video Story Contest</div>
+    
+    <p class="ev-desc">
+      Buat Video Story Kreatif di Map Mount Elaria dan gunakan 
+      <strong>#MountElaria</strong> <strong>#EventElaria</strong>
+    </p>
+
+    <div class="ev-desc" style="margin-top:8px;">
+      <strong>Syarat:</strong><br>
+      Follow TikTok Elaria Official<br>
+      Join Discord Elaria Official
+    </div>
+
+    <div class="ev-desc" style="margin-top:10px;">
+      <strong>Hadiah:</strong><br>
+      Juara 1: 1.500.000<br>
+      Juara 2: 1.000.000<br>
+      Juara 3: 500.000
+    </div>
+
+    <div class="ev-footer">
+      <span class="ev-tag">Contest</span>
+      <span class="ev-arrow">→</span>
+    </div>
+  </div>
+</div>
+
+    <!-- <div class="ev-card">
+      <div class="ev-side-accent" style="background:linear-gradient(to bottom,#F5D060,transparent)"></div>
+      <div class="ev-img-wrap">
+        <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2006_09_09%20PM.png" alt="Event">
+        <div class="ev-img-over"></div>
+        <span class="ev-badge soon">Coming Soon</span>
+      </div>
+      <div class="ev-body">
+        <div class="ev-date">June 2026 — Date TBA</div>
+        <div class="ev-title">Trials of the Crystal Abyss</div>
+        <p class="ev-desc">Descend into the crystal caverns where only the worthy may pass. A legendary weapon of forgotten power awaits at the deepest depth.</p>
+        <div class="ev-footer">
+          <span class="ev-tag">Combat</span>
+          <span class="ev-arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ev-card">
+      <div class="ev-side-accent" style="background:linear-gradient(to bottom,rgba(150,150,150,.3),transparent)"></div>
+      <div class="ev-img-wrap">
+        <img src="https://raw.githubusercontent.com/VaelHae/elaria-official/main/ChatGPT%20Image%20Apr%2012%2C%202026%2C%2005_43_32%20PM.png" alt="Event" style="filter:brightness(.35) saturate(.4) grayscale(.7)">
+        <div class="ev-img-over"></div>
+        <span class="ev-badge ended">Ended</span>
+      </div>
+      <div class="ev-body">
+        <div class="ev-date">April 1 – April 30, 2026</div>
+        <div class="ev-title">The Rune Harvest</div>
+        <p class="ev-desc">The ancient standing stones spoke once more. Adventurers who gathered all eight runes were granted the mark of the Silent Keeper.</p>
+        <div class="ev-footer">
+          <span class="ev-tag">Lore</span>
+          <span class="ev-arrow" style="color:rgba(245,232,192,.15)">→</span>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+</section>
+
 <!-- FEATURES -->
+<div class="divider"><div class="dline"></div><div class="dgem t"></div><div class="dline"></div></div>
 <section class="feat-sec" id="features">
   <p class="lbl">What Awaits</p>
   <h2 class="ttl">The Wonders of Elaria</h2>
   <div class="feat-grid">
-    <div class="fc"><span class="fi">&#128302;</span><div class="ft">Crystal Caverns</div><p class="fd">Descend into glowing blue and pink crystal formations deep beneath the mountain.</p></div>
-    <div class="fc"><span class="fi">&#127812;</span><div class="ft">Enchanted Groves</div><p class="fd">Wander through forests lit by glowing mushrooms and ancient trees twisted by magic.</p></div>
-    <div class="fc"><span class="fi">&#9879;&#65039;</span><div class="ft">Ancient Ruins</div><p class="fd">Discover Celtic standing stones engraved with forgotten runes and hidden lore scrolls.</p></div>
-    <div class="fc"><span class="fi">&#127807;</span><div class="ft">Living World</div><p class="fd">A handcrafted open world that breathes with ambience, secrets, and exploration paths.</p></div>
-    <div class="fc"><span class="fi">&#9876;&#65039;</span><div class="ft">Legendary Weapons</div><p class="fd">Find swords buried in stone amidst wildflower fields, waiting for their worthy champion.</p></div>
-    <div class="fc"><span class="fi">&#10024;</span><div class="ft">Magic &amp; Lore</div><p class="fd">Uncover the story of Mount Elaria — a realm where magic is not cast, but awakened.</p></div>
+    <div class="fc"><span class="fi">💎</span><div class="ft">Crystal Caverns</div><p class="fd">Descend into glowing blue and pink crystal formations deep beneath the mountain.</p></div>
+    <div class="fc"><span class="fi">🍄</span><div class="ft">Enchanted Groves</div><p class="fd">Wander through forests lit by glowing mushrooms and ancient trees twisted by magic.</p></div>
+    <div class="fc"><span class="fi">⚗️</span><div class="ft">Ancient Ruins</div><p class="fd">Discover Celtic standing stones engraved with forgotten runes and hidden lore scrolls.</p></div>
+    <div class="fc"><span class="fi">🌿</span><div class="ft">Living World</div><p class="fd">A handcrafted open world that breathes with ambience, secrets, and exploration paths.</p></div>
+    <div class="fc"><span class="fi">⚔️</span><div class="ft">Legendary Weapons</div><p class="fd">Find swords buried in stone amidst wildflower fields, waiting for their worthy champion.</p></div>
+    <div class="fc"><span class="fi">✨</span><div class="ft">Magic &amp; Lore</div><p class="fd">Uncover the story of Mount Elaria — a realm where magic is not cast, but awakened.</p></div>
+  </div>
+</section>
+
+<!-- STORE -->
+<div class="divider"><div class="dline"></div><div class="dgem v"></div><div class="dline"></div></div>
+<section class="store-sec" id="store">
+  <p class="lbl gold">Elaria Store</p>
+  <h2 class="ttl">The Merchant's Sanctum</h2>
+  <div class="store-card">
+    <div class="store-corner tl"></div>
+    <div class="store-corner br"></div>
+    <div>
+      <span class="store-icon">🏪</span>
+      <div class="store-name">Elaria Store</div>
+      <p class="store-sub">Browse exclusive items, cosmetics, and treasures from the world of Mount Elaria. Support the realm and adorn your adventurer with legendary gear.</p>
+      <div class="store-tags">
+        <span class="s-tag g">Exclusive Items</span>
+        <span class="s-tag t">Cosmetics</span>
+        <span class="s-tag v">Collectibles</span>
+      </div>
+      <!-- ⬇ Replace href with your actual Elaria Store URL -->
+      <a href="#" target="_blank" class="store-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 16.1 6.1 17 7 17h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63H19c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0023.46 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        Visit Elaria Store
+      </a>
+    </div>
+    <div class="store-visual">
+      <div class="store-orb">
+        <span class="orb-icon">🛍️</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREDITS -->
+<div class="divider"><div class="dline"></div><div class="dgem t"></div><div class="dline"></div></div>
+<section class="credits-sec" id="credits">
+  <p class="lbl">Behind the Realm</p>
+  <h2 class="ttl">The Makers of Elaria</h2>
+  <p class="body">Built by passionate creators who breathed life into the silent peaks. Each studio brings their craft to forge a world unlike any other.</p>
+  <div class="credits-grid">
+
+    <!-- Studio 1 -->
+    <div class="credit-card">
+      <!-- Replace src with your actual 108 Studio logo URL -->
+      <div class="credit-avatar">
+        <img src="https://i.ibb.co.com/bpDgbSt/1772714683584-85727ff3-6784-4dc2-b700-3acaa49d6e17.png" alt="108 Studio Logo">
+      </div>
+      <div class="credit-studio">Studio</div>
+      <div class="credit-name">108 Studio</div>
+      <p class="credit-by">by <strong>NICODEMUS</strong></p>
+      <div class="credit-role">
+        <span class="credit-tag">World Design</span>
+        <span class="credit-tag">Art Direction</span>
+      </div>
+      <div class="credit-accent a1"></div>
+    </div>
+
+    <!-- Studio 2 -->
+    <div class="credit-card">
+      <!-- Replace src with your actual Catalyst Studio logo URL -->
+      <div class="credit-avatar">
+        <img src="https://i.ibb.co.com/W4yYjTNr/a8f6971dced7759108ee51a19e4c1518.png" alt="Catalyst Studio Logo">
+      </div>
+      <div class="credit-studio">Studio</div>
+      <div class="credit-name">Catalyst Studio</div>
+      <p class="credit-by">by <strong>Reihaku Shiranui</strong></p>
+      <div class="credit-role">
+        <span class="credit-tag teal">Development</span>
+        <span class="credit-tag teal">Scripting</span>
+      </div>
+      <div class="credit-accent a2"></div>
+    </div>
+
+    <!-- Elaria Official -->
+    <div class="credit-card main">
+      <!-- Replace src with your actual Elaria Official logo URL -->
+      <div class="credit-avatar" style="width:64px;height:64px;border-radius:6px;font-size:26px">
+        <img src="https://i.ibb.co.com/ksxQxNvN/68ea20a5f8926b033fc7a76b45c0e3c3.png" alt="Elaria Official Logo">
+      </div>
+      <div class="credit-studio">Publisher &amp; Creator</div>
+      <div class="credit-name">Elaria Official</div>
+      <p class="credit-by">The vision behind the realm</p>
+      <div class="credit-role">
+        <span class="credit-tag pink">Publishing</span>
+        <span class="credit-tag pink">Lore</span>
+        <span class="credit-tag pink">Community</span>
+      </div>
+      <div class="credit-accent a3"></div>
+    </div>
+
   </div>
 </section>
 
@@ -464,20 +699,21 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
   <div class="f-sub">Roblox Game Publisher</div>
   <ul class="f-nav">
     <li><a href="https://www.roblox.com/games/135531149495769/Mount-Elaria-Journey-of-the-silent-peaks" target="_blank">Play Now</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#store">Store</a></li>
+    <li><a href="#credits">Credits</a></li>
     <li><a href="#">Community</a></li>
-    <li><a href="#">Updates</a></li>
   </ul>
-  <p class="f-copy">&#169; 2026 Elaria Official &#8212; All rights reserved. Mount Elaria is a Roblox experience.</p>
+  <p class="f-copy">© 2026 Elaria Official — All rights reserved. Mount Elaria is a Roblox experience.</p>
 </footer>
 
 <script>
-/* FIREFLIES */
+/* ── FIREFLIES ── */
 (function(){
   var c=document.getElementById('ff');
   var cols=['#F5D060','#40E0D0','#F5D060','#F5D060','#EE88FF'];
   for(var i=0;i<28;i++){
-    var el=document.createElement('div');
-    el.className='f';
+    var el=document.createElement('div');el.className='f';
     var col=cols[Math.floor(Math.random()*cols.length)];
     var sz=1.8+Math.random()*2.2;
     el.style.cssText='left:'+Math.random()*100+'%;top:'+(12+Math.random()*74)+'%;'
@@ -489,99 +725,109 @@ footer{position:relative;z-index:10;padding:50px 40px 38px;text-align:center;bor
   }
 })();
 
-/* ===================================================
-   AUDIO SYSTEM
-   - Klik tombol Music → mulai. Klik lagi → mute/unmute
-   - URL langsung ke raw.githubusercontent.com (no redirect)
-   - playbackRate 0.5 untuk ambient
-   - fade-in volume agar tidak mendadak
-   - ganti track otomatis saat ended
-=================================================== */
+/* ── LIVE ROBLOX STATS ── */
+(function(){
+  var PLACE_ID = '135531149495769';
+  var PROXY    = 'https://api.allorigins.win/raw?url=';
+
+  function fmt(n){
+    if(n>=1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'')+'M';
+    if(n>=1000)    return (n/1000).toFixed(1).replace(/\.0$/,'')+'K';
+    return String(n);
+  }
+
+  function setEl(id,txt){
+    var el=document.getElementById(id);
+    if(el) el.innerHTML=txt;
+  }
+
+  function showErr(){
+    setEl('stat-active','—');
+    setEl('stat-visits','—');
+    setEl('stat-likes','—');
+  }
+
+  async function loadStats(){
+    try{
+      /* Step 1 – resolve place → universe */
+      var r1=await fetch(PROXY+encodeURIComponent('https://apis.roblox.com/universes/v1/places/'+PLACE_ID+'/universe'));
+      if(!r1.ok){showErr();return;}
+      var d1=await r1.json();
+      var uId=d1.universeId;
+      if(!uId){showErr();return;}
+
+      /* Step 2 – game details (playing + visits) */
+      var r2=await fetch(PROXY+encodeURIComponent('https://games.roblox.com/v1/games?universeIds='+uId));
+      var d2=await r2.json();
+      var g=d2.data&&d2.data[0];
+      if(!g){showErr();return;}
+
+      var playing=g.playing||0;
+      var visits=g.visits||0;
+
+      /* Step 3 – votes (likes / total) */
+      var r3=await fetch(PROXY+encodeURIComponent('https://games.roblox.com/v1/games/votes?universeIds='+uId));
+      var d3=await r3.json();
+      var v=d3.data&&d3.data[0];
+      var likeRate='—';
+      if(v){
+        var total=(v.upVotes||0)+(v.downVotes||0);
+        likeRate=total>0?Math.round((v.upVotes/total)*100)+'%':'N/A';
+      }
+
+      setEl('stat-active',fmt(playing));
+      setEl('stat-visits',fmt(visits));
+      setEl('stat-likes',likeRate);
+    }catch(e){
+      showErr();
+    }
+  }
+
+  loadStats();
+  /* Refresh every 60 seconds */
+  setInterval(loadStats,60000);
+})();
+
+/* ── AUDIO SYSTEM ── */
 (function(){
   var BASE='https://raw.githubusercontent.com/VaelHae/elaria-official/main/';
   var FILES=[
-    '69d4b466ca3c7fde94acc815_part1.ogg',
-    '69d4b466ca3c7fde94acc815_part2.ogg',
-    '69d4b466ca3c7fde94acc815_part3.ogg',
-    '69d4b466ca3c7fde94acc815_part4.ogg',
-    '69d4b466ca3c7fde94acc815_part5.ogg',
-    '69d4b466ca3c7fde94acc815_part6.ogg',
-    '69d4b466ca3c7fde94acc815_part7.ogg',
-    '69d4b466ca3c7fde94acc815_part8.ogg'
+    '69d4b466ca3c7fde94acc815_part1.ogg','69d4b466ca3c7fde94acc815_part2.ogg',
+    '69d4b466ca3c7fde94acc815_part3.ogg','69d4b466ca3c7fde94acc815_part4.ogg',
+    '69d4b466ca3c7fde94acc815_part5.ogg','69d4b466ca3c7fde94acc815_part6.ogg',
+    '69d4b466ca3c7fde94acc815_part7.ogg','69d4b466ca3c7fde94acc815_part8.ogg'
   ];
-
   var snd=document.getElementById('snd');
   var btn=document.getElementById('musicBtn');
   var txt=document.getElementById('btnTxt');
-
-  var idx=0;
-  var playing=false;
-  var muted=false;
-  var TARGET=0.62;
-  var RATE=0.5;
-  var fadeId=null;
+  var idx=0,playing=false,muted=false,TARGET=0.62,RATE=0.5,fadeId=null;
 
   function applyRate(){
-    try{
-      snd.playbackRate=RATE;
-      snd.preservesPitch=false;
-      if(snd.mozPreservesPitch!==undefined) snd.mozPreservesPitch=false;
-      if(snd.webkitPreservesPitch!==undefined) snd.webkitPreservesPitch=false;
+    try{snd.playbackRate=RATE;snd.preservesPitch=false;
+      if(snd.mozPreservesPitch!==undefined)snd.mozPreservesPitch=false;
+      if(snd.webkitPreservesPitch!==undefined)snd.webkitPreservesPitch=false;
     }catch(e){}
   }
-
   function clearFade(){if(fadeId){clearInterval(fadeId);fadeId=null;}}
-
   function fadeIn(){
-    clearFade();
-    snd.volume=0;
-    var step=TARGET/100;
+    clearFade();snd.volume=0;var step=TARGET/100;
     fadeId=setInterval(function(){
-      var v=Math.min(TARGET,snd.volume+step);
-      snd.volume=v;
-      if(v>=TARGET){clearFade();}
+      var v=Math.min(TARGET,snd.volume+step);snd.volume=v;if(v>=TARGET)clearFade();
     },20);
   }
-
   function playTrack(i){
     idx=((i%FILES.length)+FILES.length)%FILES.length;
-    snd.src=BASE+FILES[idx];
-    snd.load();
-    snd.volume=0;
+    snd.src=BASE+FILES[idx];snd.load();snd.volume=0;
     var p=snd.play();
-    if(p&&p.then){
-      p.then(function(){applyRate();fadeIn();}).catch(function(e){console.warn('Audio play failed:',e);});
-    }else{
-      applyRate();fadeIn();
-    }
+    if(p&&p.then){p.then(function(){applyRate();fadeIn();}).catch(function(e){console.warn('Audio:',e);});}
+    else{applyRate();fadeIn();}
   }
-
-  /* Auto-next track */
   snd.addEventListener('ended',function(){playTrack(idx+1);});
-
-  /* Keep rate after any browser override */
   snd.addEventListener('play',function(){applyRate();});
-
-  /* Button click handler */
   btn.addEventListener('click',function(){
-    if(!playing){
-      playing=true;
-      muted=false;
-      btn.classList.remove('off');
-      txt.textContent='Music';
-      playTrack(0);
-    } else if(!muted){
-      muted=true;
-      clearFade();
-      snd.volume=0;
-      btn.classList.add('off');
-      txt.textContent='Muted';
-    } else {
-      muted=false;
-      btn.classList.remove('off');
-      txt.textContent='Music';
-      fadeIn();
-    }
+    if(!playing){playing=true;muted=false;btn.classList.remove('off');txt.textContent='Music';playTrack(0);}
+    else if(!muted){muted=true;clearFade();snd.volume=0;btn.classList.add('off');txt.textContent='Muted';}
+    else{muted=false;btn.classList.remove('off');txt.textContent='Music';fadeIn();}
   });
 })();
 </script>
